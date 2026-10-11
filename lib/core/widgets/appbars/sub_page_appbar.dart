@@ -1,6 +1,5 @@
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
-import 'package:studio_accordo_app_mobile/core/theme/app_colors.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -29,7 +28,7 @@ class SubPageAppbar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       title: Text(
         title,
-        style: context.displayMedium!.copyWith(color: AppColors.darkInk),
+        style: context.displayMedium!.copyWith(color: context.colors.onSurface),
       ),
       actions: actions,
       leading: GestureDetector(
@@ -42,6 +41,10 @@ class SubPageAppbar extends StatelessWidget implements PreferredSizeWidget {
             width: 44.w,
             height: 44.h,
             fit: BoxFit.scaleDown,
+            colorFilter: ColorFilter.mode(
+              context.colors.onSurface,
+              BlendMode.srcIn,
+            ),
           ),
         ),
       ),

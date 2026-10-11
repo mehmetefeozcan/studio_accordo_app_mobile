@@ -1,7 +1,7 @@
 import 'package:studio_accordo_app_mobile/core/routing/routes/main/main_routes.dart';
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
-import 'package:studio_accordo_app_mobile/core/theme/app_colors.dart';
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
@@ -27,7 +27,7 @@ class GeneralBottomNavbar extends StatelessWidget {
               top: 10.h,
               bottom: context.isAndroid ? 50.h : 30.h,
             ),
-            decoration: BoxDecoration(color: AppColors.darkSurface200),
+            decoration: BoxDecoration(color: context.colors.surface),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -69,9 +69,8 @@ class GeneralBottomNavbar extends StatelessWidget {
     String title,
     String route,
   ) {
-    final color = currentPath == route
-        ? AppColors.darkAccentText
-        : AppColors.darkInkSubtle;
+    final selected = currentPath == route;
+    final color = selected ? context.colors.onSurface : context.ds.inkSubtle;
 
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
@@ -80,6 +79,12 @@ class GeneralBottomNavbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 2.h,
         children: [
+          // Seçili sekme: 2px marka kırmızısı çizgi.
+          Container(
+            width: 24.w,
+            height: 2,
+            color: selected ? context.ds.brandRed : Colors.transparent,
+          ),
           SvgPicture.asset(
             icon,
             width: 22.w,

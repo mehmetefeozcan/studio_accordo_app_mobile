@@ -6,7 +6,6 @@ import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension
 import 'package:studio_accordo_app_mobile/core/routing/routes/main/main_routes.dart';
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
-import 'package:studio_accordo_app_mobile/core/theme/app_colors.dart';
 import 'package:studio_accordo_app_mobile/core/base/base_store.dart';
 import 'package:studio_accordo_app_mobile/core/base/base_view.dart';
 import 'package:studio_accordo_app_mobile/core/di/locator.dart';
@@ -53,7 +52,7 @@ class _UnderConstructionViewState extends State<UnderConstructionView>
                   vertical: context.space2,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.darkPaper,
+                  color: context.ds.paper,
                   borderRadius: BorderRadius.circular(context.radiusLg),
                 ),
                 child: SvgPicture.asset(AppAssets.icons.wipMusicStaff),
@@ -71,7 +70,7 @@ class _UnderConstructionViewState extends State<UnderConstructionView>
                 child: Text(
                   context.l10n.backToToday,
                   style: context.bodyMedium!.copyWith(
-                    color: AppColors.onAccent,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -91,14 +90,14 @@ class _UnderConstructionViewState extends State<UnderConstructionView>
         horizontal: context.space2,
       ),
       decoration: BoxDecoration(
-        color: AppColors.darkAccentWash,
+        color: context.ds.accentWash,
         borderRadius: BorderRadius.circular(context.radiusPill),
-        border: Border.all(width: 1, color: AppColors.darkAccentDim),
+        border: Border.all(width: 1, color: context.ds.accentDim),
       ),
       child: Text(
         context.l10n.disabledInThisVersion,
         style: context.titleSmall!.copyWith(
-          color: AppColors.darkAccentText,
+          color: context.ds.accentText,
           fontWeight: FontWeight.w600,
         ),
       ),

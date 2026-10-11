@@ -46,11 +46,8 @@ class TuningStringsWidget extends StatelessWidget {
     final inTune = store.tunedStrings.contains(index);
     final green = context.ds.signalTrue;
 
-    // Akortta: yeşil zemin. Metin rengi zeminin açıklığına göre seçilir
-    // (koyu temada açık yeşil, açık temada koyu yeşil kullanılıyor).
-    final onGreen = ThemeData.estimateBrightnessForColor(green) == Brightness.dark
-        ? Colors.white
-        : Colors.black;
+    // Akortta: success zemini; üstündeki metin `onTertiary` (AA doğrulanmış çift).
+    final onGreen = context.colors.onTertiary;
 
     return GestureDetector(
       onTap: () => store.selectString(index),

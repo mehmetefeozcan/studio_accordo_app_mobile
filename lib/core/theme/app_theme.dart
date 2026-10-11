@@ -50,7 +50,7 @@ class AppTheme {
         foregroundColor: scheme.onSurface,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: AppTextStyles.displayM.copyWith(
+        titleTextStyle: AppTextStyles.title2.copyWith(
           color: scheme.onSurface,
         ),
       ),
@@ -72,18 +72,18 @@ class AppTheme {
         space: 1,
       ),
 
-      // Birincil eylem: amber dolgu, koyu yazı. Ekranda tek tane olur.
+      // Birincil eylem: mürekkep dolgu (action.bg), krem yazı. Ekranda tek tane olur.
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: scheme.primary,
           foregroundColor: scheme.onPrimary,
           disabledBackgroundColor: scheme.surfaceContainerHigh,
           disabledForegroundColor: scheme.onSurfaceVariant,
-          minimumSize: const Size(0, 48),
+          minimumSize: const Size(0, 44),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           textStyle: AppTextStyles.bodyStrong,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
         ),
       ),
@@ -93,11 +93,11 @@ class AppTheme {
         style: OutlinedButton.styleFrom(
           foregroundColor: scheme.onSurface,
           side: BorderSide(color: scheme.outline),
-          minimumSize: const Size(0, 48),
+          minimumSize: const Size(0, 44),
           padding: const EdgeInsets.symmetric(horizontal: 16),
           textStyle: AppTextStyles.body,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
         ),
       ),
@@ -109,7 +109,7 @@ class AppTheme {
           minimumSize: const Size(0, 44),
           textStyle: AppTextStyles.body,
           shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(8)),
+            borderRadius: BorderRadius.all(Radius.circular(12)),
           ),
         ),
       ),
@@ -123,40 +123,40 @@ class AppTheme {
           vertical: 12,
         ),
         border: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           borderSide: BorderSide(color: scheme.outline),
         ),
         enabledBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           borderSide: BorderSide(color: scheme.outline),
         ),
         focusedBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           borderSide: BorderSide(color: semantic.focusRing, width: 2),
         ),
         errorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           borderSide: BorderSide(color: scheme.error),
         ),
         focusedErrorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(8)),
+          borderRadius: const BorderRadius.all(Radius.circular(12)),
           borderSide: BorderSide(color: scheme.error, width: 2),
         ),
       ),
 
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: scheme.surface,
+        backgroundColor: semantic.sheet,
         surfaceTintColor: Colors.transparent,
         modalBarrierColor: scheme.scrim,
         shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(18)),
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
         ),
       ),
 
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: scheme.surface,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: semantic.accentWash,
+        indicatorColor: Colors.transparent, // seçili durumu 2px kırmızı çizgi taşır
         elevation: 0,
         labelTextStyle: WidgetStatePropertyAll(AppTextStyles.label),
       ),
@@ -165,7 +165,7 @@ class AppTheme {
         activeTrackColor: scheme.primary,
         inactiveTrackColor: scheme.surfaceContainerHigh,
         thumbColor: scheme.primary,
-        overlayColor: semantic.accentWash,
+        overlayColor: semantic.pressedOverlay,
       ),
 
       progressIndicatorTheme: ProgressIndicatorThemeData(
@@ -177,7 +177,7 @@ class AppTheme {
         thumbColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)
               ? scheme.onPrimary
-              : scheme.onSurfaceVariant,
+              : semantic.controlThumb,
         ),
         trackColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)
@@ -186,6 +186,8 @@ class AppTheme {
         ),
         trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
       ),
+
+      highlightColor: semantic.pressedOverlay,
 
       // Hareket bu üründe bir yerde iş yapar: metronom vuruşu ve akort
       // ibresi. Geri kalanı 120–180ms yer değiştirir; giriş animasyonu,

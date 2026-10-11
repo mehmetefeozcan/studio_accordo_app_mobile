@@ -31,7 +31,13 @@ class HomeShortcutButtonWidget extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             spacing: context.space2,
             children: [
-              SvgPicture.asset(params.icon),
+              SvgPicture.asset(
+                params.icon,
+                colorFilter: ColorFilter.mode(
+                  context.colors.onSurface,
+                  BlendMode.srcIn,
+                ),
+              ),
               Text(params.text, style: context.bodySmall),
             ],
           ),

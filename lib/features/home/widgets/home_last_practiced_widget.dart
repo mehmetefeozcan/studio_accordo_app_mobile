@@ -65,7 +65,13 @@ class HomeLastPracticedWidget extends StatelessWidget {
               ),
             ],
           ),
-          SvgPicture.asset(AppAssets.icons.chevron),
+          SvgPicture.asset(
+            AppAssets.icons.chevron,
+            colorFilter: ColorFilter.mode(
+              context.ds.inkSubtle,
+              BlendMode.srcIn,
+            ),
+          ),
         ],
       ),
     );

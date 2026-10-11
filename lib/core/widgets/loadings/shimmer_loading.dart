@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerLoading {
-  static const Color _baseColor = Color(0xFFE0E0E0);
-  static const Color _highlightColor = Color(0xFFF5F5F5);
+  /// Renkler temadan okunur (açık / koyu otomatik). İçerideki `Colors.white`
+  /// dolgular yalnızca maskedir, görünen renk değildir.
+  static Widget _shimmer(Widget child) => Builder(
+    builder: (context) => Shimmer.fromColors(
+      baseColor: Theme.of(context).colorScheme.surfaceContainerHigh,
+      highlightColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      child: child,
+    ),
+  );
 
   static Widget box({double? width, double height = 16, double radius = 8}) {
-    return Shimmer.fromColors(
-      baseColor: _baseColor,
-      highlightColor: _highlightColor,
-      child: Container(
+    return _shimmer(Container(
         width: width,
         height: height,
         decoration: BoxDecoration(
@@ -21,10 +25,7 @@ class ShimmerLoading {
   }
 
   static Widget circle({double size = 40}) {
-    return Shimmer.fromColors(
-      baseColor: _baseColor,
-      highlightColor: _highlightColor,
-      child: Container(
+    return _shimmer(Container(
         width: size,
         height: size,
         decoration: const BoxDecoration(
@@ -36,10 +37,7 @@ class ShimmerLoading {
   }
 
   static Widget text({int lines = 1, double? width}) {
-    return Shimmer.fromColors(
-      baseColor: _baseColor,
-      highlightColor: _highlightColor,
-      child: Column(
+    return _shimmer(Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: List.generate(lines, (i) {
           final isLast = i == lines - 1;
@@ -67,10 +65,7 @@ class ShimmerLoading {
   }) {
     return Padding(
       padding: margin,
-      child: Shimmer.fromColors(
-        baseColor: _baseColor,
-        highlightColor: _highlightColor,
-        child: Container(
+      child: _shimmer(Container(
           height: height,
           decoration: BoxDecoration(
             color: Colors.white,
@@ -82,10 +77,7 @@ class ShimmerLoading {
   }
 
   static Widget listTile({bool hasSubtitle = true}) {
-    return Shimmer.fromColors(
-      baseColor: _baseColor,
-      highlightColor: _highlightColor,
-      child: Padding(
+    return _shimmer(Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         child: Row(
           children: [
@@ -130,10 +122,7 @@ class ShimmerLoading {
   }
 
   static Widget profileHeader() {
-    return Shimmer.fromColors(
-      baseColor: _baseColor,
-      highlightColor: _highlightColor,
-      child: Padding(
+    return _shimmer(Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
@@ -175,10 +164,7 @@ class ShimmerLoading {
   }) {
     return Padding(
       padding: margin,
-      child: Shimmer.fromColors(
-        baseColor: _baseColor,
-        highlightColor: _highlightColor,
-        child: Container(
+      child: _shimmer(Container(
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),

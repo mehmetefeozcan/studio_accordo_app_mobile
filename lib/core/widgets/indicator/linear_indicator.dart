@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:studio_accordo_app_mobile/core/theme/app_colors.dart';
+import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 
 class LinearIndicator extends StatelessWidget {
-  final Color activeColor;
-  final Color passiveColor;
+  /// Verilmezse `colors.primary` / `colors.outlineVariant`.
+  final Color? activeColor;
+  final Color? passiveColor;
 
   /// [0-100] range acceptable
   final double progress;
@@ -11,16 +12,16 @@ class LinearIndicator extends StatelessWidget {
   const new({
     super.key,
     required this.progress,
-    this.activeColor = AppColors.darkAccent,
-    this.passiveColor = AppColors.darkBorder,
+    this.activeColor,
+    this.passiveColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return LinearProgressIndicator(
       borderRadius: BorderRadius.circular(100),
-      color: passiveColor,
-      valueColor: AlwaysStoppedAnimation(activeColor),
+      color: passiveColor ?? context.colors.outlineVariant,
+      valueColor: AlwaysStoppedAnimation(activeColor ?? context.colors.primary),
       value: progress / 100,
     );
   }

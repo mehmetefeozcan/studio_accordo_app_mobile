@@ -2,32 +2,32 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
+/// v4 · Karışım — `ColorScheme` eşlemesi.
+///
+/// `primary` = **mürekkep** (action.bg), marka kırmızısı değil. Kırmızı
+/// `AppSemanticColors.brandRed` / `ColorScheme.inversePrimary`'de durur ve
+/// yalnızca küçük UI işaretlerinde kullanılır.
 class AppThemeColors {
   const AppThemeColors._();
 
-  /// Birincil tema. Sistem koyu öncelikli kurgulandı.
   static const dark = ColorScheme(
     brightness: Brightness.dark,
 
-    // Marka amberi — birincil buton, aktif sekme, ilerleme dolgusu
-    primary: AppColors.darkAccent,
-    onPrimary: AppColors.onAccent,
+    primary: AppColors.darkAction,
+    onPrimary: AppColors.darkOnAction,
     primaryContainer: AppColors.darkAccentWash,
-    onPrimaryContainer: AppColors.darkAccentText,
+    onPrimaryContainer: AppColors.darkInk,
 
-    // İkincil metin ve nötr kontroller
     secondary: AppColors.darkInkMuted,
     onSecondary: AppColors.darkSurface100,
     secondaryContainer: AppColors.darkSurface300,
     onSecondaryContainer: AppColors.darkInk,
 
-    // Doğru / tamamlandı
     tertiary: AppColors.darkSignalTrue,
     onTertiary: AppColors.darkSurface100,
-    tertiaryContainer: AppColors.darkSurface200,
+    tertiaryContainer: AppColors.darkSuccessContainer,
     onTertiaryContainer: AppColors.darkSignalTrue,
 
-    // Yüzey basamakları — derinliği bunlar anlatır, gölge değil
     surface: AppColors.darkSurface200,
     onSurface: AppColors.darkInk,
     onSurfaceVariant: AppColors.darkInkMuted,
@@ -39,32 +39,28 @@ class AppThemeColors {
     surfaceDim: AppColors.darkSurface000,
     surfaceBright: AppColors.darkSurfaceOverlay,
 
-    // Kenarlıklar: outline kontrol sınırı (3:1), outlineVariant sade ayraç
     outline: AppColors.darkBorderStrong,
     outlineVariant: AppColors.darkBorder,
 
-    // Doğru olmayan her şey
     error: AppColors.darkSignalOff,
-    onError: AppColors.onAccent,
-    errorContainer: AppColors.darkSurface300,
+    onError: AppColors.darkSurface100,
+    errorContainer: AppColors.darkErrorContainer,
     onErrorContainer: AppColors.darkSignalOff,
 
     scrim: AppColors.darkScrim,
     shadow: AppColors.darkShadowOverlay,
     inverseSurface: AppColors.lightSurface200,
     onInverseSurface: AppColors.lightInk,
-    inversePrimary: AppColors.lightAccent,
+    inversePrimary: AppColors.darkAccent,
   );
 
-  /// Açık tema. Koyu temadan türetildi — `paper*` tokenları **değişmez**,
-  /// nota her iki temada da kâğıt olarak okunur.
   static const light = ColorScheme(
     brightness: Brightness.light,
 
-    primary: AppColors.lightAccent,
-    onPrimary: AppColors.onAccent,
+    primary: AppColors.lightAction,
+    onPrimary: AppColors.lightOnAction,
     primaryContainer: AppColors.lightAccentWash,
-    onPrimaryContainer: AppColors.lightAccentText,
+    onPrimaryContainer: AppColors.lightInk,
 
     secondary: AppColors.lightInkMuted,
     onSecondary: AppColors.lightSurface100,
@@ -73,7 +69,7 @@ class AppThemeColors {
 
     tertiary: AppColors.lightSignalTrue,
     onTertiary: AppColors.lightSurface100,
-    tertiaryContainer: AppColors.lightSurface200,
+    tertiaryContainer: AppColors.lightSuccessContainer,
     onTertiaryContainer: AppColors.lightSignalTrue,
 
     surface: AppColors.lightSurface200,
@@ -91,14 +87,14 @@ class AppThemeColors {
     outlineVariant: AppColors.lightBorder,
 
     error: AppColors.lightSignalOff,
-    onError: AppColors.lightSurface100,
-    errorContainer: AppColors.lightSurface300,
+    onError: AppColors.lightSurface200,
+    errorContainer: AppColors.lightErrorContainer,
     onErrorContainer: AppColors.lightSignalOff,
 
     scrim: AppColors.lightScrim,
     shadow: AppColors.lightShadowOverlay,
     inverseSurface: AppColors.darkSurface200,
     onInverseSurface: AppColors.darkInk,
-    inversePrimary: AppColors.darkAccent,
+    inversePrimary: AppColors.lightAccent,
   );
 }

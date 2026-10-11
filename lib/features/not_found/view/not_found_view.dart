@@ -8,7 +8,6 @@ import 'package:studio_accordo_app_mobile/core/widgets/buttons/custom_outlined_b
 import 'package:studio_accordo_app_mobile/features/not_found/store/not_found_store.dart';
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
-import 'package:studio_accordo_app_mobile/core/theme/app_colors.dart';
 import 'package:studio_accordo_app_mobile/core/base/base_store.dart';
 import 'package:studio_accordo_app_mobile/core/base/base_view.dart';
 import 'package:studio_accordo_app_mobile/core/di/locator.dart';
@@ -53,7 +52,7 @@ class _NotFoundViewState extends State<NotFoundView>
                   vertical: context.space2,
                 ),
                 decoration: BoxDecoration(
-                  color: AppColors.darkPaper,
+                  color: context.ds.paper,
                   borderRadius: BorderRadius.circular(context.radiusLg),
                 ),
                 child: SvgPicture.asset(AppAssets.icons.wholeRestMeasure),
@@ -65,7 +64,7 @@ class _NotFoundViewState extends State<NotFoundView>
                 child: Text(
                   context.l10n.pageNotFound,
                   style: context.bodyMedium!.copyWith(
-                    color: AppColors.darkInkMuted,
+                    color: context.colors.onSurfaceVariant,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -79,7 +78,7 @@ class _NotFoundViewState extends State<NotFoundView>
                 child: Text(
                   context.l10n.backToToday,
                   style: context.bodyMedium!.copyWith(
-                    color: AppColors.onAccent,
+                    color: Theme.of(context).colorScheme.onPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -97,7 +96,7 @@ class _NotFoundViewState extends State<NotFoundView>
                 child: Text(
                   context.l10n.backToPrevious,
                   style: context.bodyMedium!.copyWith(
-                    color: AppColors.darkInk,
+                    color: context.colors.onSurface,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

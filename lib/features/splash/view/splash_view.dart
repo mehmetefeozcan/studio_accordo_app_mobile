@@ -7,7 +7,6 @@ import 'package:studio_accordo_app_mobile/features/splash/store/splash_store.dar
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/widgets/indicator/index.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
-import 'package:studio_accordo_app_mobile/core/theme/app_colors.dart';
 import 'package:studio_accordo_app_mobile/core/base/base_store.dart';
 import 'package:studio_accordo_app_mobile/core/base/base_view.dart';
 import 'package:studio_accordo_app_mobile/core/di/locator.dart';
@@ -72,7 +71,15 @@ class _SplashViewState extends State<SplashView>
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Spacer(),
-              SvgPicture.asset(AppAssets.icons.porte),
+              SvgPicture.asset(
+                AppAssets.icons.porte,
+                width: 96.w,
+                height: 96.w,
+                colorFilter: ColorFilter.mode(
+                  context.colors.onSurface,
+                  BlendMode.srcIn,
+                ),
+              ),
               SizedBox(height: context.space7),
               Text("Studio Accordo", style: context.displayLarge),
               Spacer(),
@@ -96,7 +103,7 @@ class _SplashViewState extends State<SplashView>
                     handleMessage(context),
                     key: ValueKey(_store!.selectedMessageOrder),
                     style: context.titleSmall!.copyWith(
-                      color: AppColors.darkInkSubtle,
+                      color: context.ds.inkSubtle,
                     ),
                   ),
                 ),

@@ -11,7 +11,7 @@ import 'package:flutter/material.dart';
 /// Buradakiler sistemin kendi sözlüğü.
 ///
 /// Çakışma uyarısı: `MainContextExtension` içindeki `radiusSmall/Medium/Large`
-/// 8/16/32 veriyor, Studio Accordo'nun ölçeği ise 4/8/12/18/999. İkisi bir arada
+/// 8/16/32 veriyor, Studio Accordo'nun ölçeği ise 4/8/12/16/999. İkisi bir arada
 /// tutarsız sonuç verir — aşağıdaki [radiusSm] ailesine geçip o üçünü
 /// silmeni öneririm.
 extension StudioAccordoTheme on BuildContext {
@@ -25,20 +25,36 @@ extension StudioAccordoTheme on BuildContext {
   // ─── Adlandırılmış metin stilleri ───────────────────────────────────
   // Material slotlarının karşılığı olmayanlar ve sistemin kendi adları.
 
-  /// 54/56 monospace — akort okuması, metronom BPM'i. Ekran başına tek.
+  /// 54/56 monospace — eski büyük okuma (radyal ibreye geçişte yerini
+  /// [displayNote] / [displayBpm] alır).
   TextStyle get readoutXl => AppTextStyles.readoutXl;
 
-  /// 24/28 monospace — istatistik değeri, seans süresi, skor.
+  /// 22/28 monospace — sent sapması, istatistik değeri, seans süresi.
   TextStyle get readout => AppTextStyles.readout;
 
   /// 13/18 monospace — tablatura rakamı, ölçü numarası, sent sapması.
   TextStyle get numericS => AppTextStyles.numericS;
 
-  /// 12/16 büyük harf etiket. Büyük harfe widget tarafında çevir.
+  /// 12/16 w500 etiket (sekme, rozet). Büyük harfe çevrilmez.
   TextStyle get labelStyle => AppTextStyles.label;
 
-  /// 15/22 gövde içi vurgu.
+  /// 17/22 w600 gövde içi vurgu.
   TextStyle get bodyStrong => AppTextStyles.bodyStrong;
+
+  /// 34/41 serif — ekranın büyük başlığı.
+  TextStyle get largeTitle => AppTextStyles.largeTitle;
+
+  /// 88/88 serif — akort ekranında algılanan nota.
+  TextStyle get displayNote => AppTextStyles.displayNote;
+
+  /// 72/76 serif — metronom BPM'i.
+  TextStyle get displayBpm => AppTextStyles.displayBpm;
+
+  /// 19/24 italik serif — "kalem notu" durum satırı, egzersiz başlığı.
+  TextStyle get pencilNote => AppTextStyles.pencilNote;
+
+  /// 15/20 ikincil gövde.
+  TextStyle get callout => AppTextStyles.callout;
 
   // ─── Boşluk · 4px tabanlı ───────────────────────────────────────────
   // Mevcut extension'daki oransal boşluklar (0.05.sh) ekran yüksekliğine
@@ -87,8 +103,8 @@ extension StudioAccordoTheme on BuildContext {
   /// 12 — kart, liste bloğu, istatistik kutusu.
   double get radiusMd => 12.r;
 
-  /// 18 — alt sayfa, **nota sayfası yüzeyi**, tam genişlik panel.
-  double get radiusLg => 18.r;
+  /// 16 — alt sayfa, büyük buton, tam genişlik panel.
+  double get radiusLg => 16.r;
 
   /// Hap, çip, metronom vuruş noktası.
   double get radiusPill => 999.r;
@@ -101,7 +117,17 @@ extension StudioAccordoTheme on BuildContext {
 
   // ─── Kolaylıklar ────────────────────────────────────────────────────
 
-  /// Nota sayfası kabı: kâğıt zemin, `radiusLg`, **gölgesiz.**
+  /// Egzersiz ekranındaki nota kâğıdı (v4): `sheet` zemini, 6px köşe,
+  /// 1px ayraç çizgisi ve hafif gölge. Tema ile döner.
+  BoxDecoration get scoreSheet => BoxDecoration(
+    color: ds.sheet,
+    borderRadius: BorderRadius.circular(6.r),
+    border: Border.all(color: Theme.of(this).colorScheme.outlineVariant),
+    boxShadow: ds.shadowRaised,
+  );
+
+  /// Her iki temada açık kâğıt kabı (SVG varlıkları için): `radiusLg`,
+  /// **gölgesiz.**
   ///
   /// ```dart
   /// DecoratedBox(decoration: context.paperSurface, child: scoreView)

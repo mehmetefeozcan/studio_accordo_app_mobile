@@ -1,3 +1,5 @@
+import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
+
 import 'package:flutter/material.dart';
 
 enum LoadingSize { small, medium, large }
@@ -32,7 +34,7 @@ class CustomCircleLoading extends StatelessWidget {
       width: loadingSize,
       height: loadingSize,
       child: CircularProgressIndicator(
-        color: color ?? Colors.white,
+        color: color ?? context.colors.primary,
         strokeWidth: loadingWidth,
       ),
     );

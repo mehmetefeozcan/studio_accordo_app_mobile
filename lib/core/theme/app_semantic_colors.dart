@@ -2,27 +2,25 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
-/// Material'ın `ColorScheme`'inde karşılığı olmayan Studio Accordo tokenları.
+/// Material `ColorScheme`'inde karşılığı olmayan Studio Accordo tokenları
+/// (**v4 · Karışım**).
 ///
-/// `ColorScheme` genel amaçlı bir arayüz; bu uygulamanın iki şeye ihtiyacı var
-/// ve ikisi de orada yok:
+/// Başlıca ek yuvalar: marka kırmızısı, durum renkleri + kapları (success /
+/// warning / error), nota kâğıdı (`sheet`, `scoreHighlight`), kontrol
+/// başparmağı, basılı katman ve grafik serileri.
 ///
-///  * **Kâğıt yüzeyi** (`paper*`) — nota sayfası, her iki temada da açık kalır.
-///    `ColorScheme`'in tüm yüzeyleri temayla döner, bu dönmez.
-///  * **Sinyal renkleri** (`signalTrue` / `signalOff`) — `error` tek başına
-///    "akortta değil" durumunu anlatmaya yetmez, `tertiary` ise semantik
-///    değildir.
-///
-/// Ayrıca amberin metin / zemin / kenar varyantları ile grafik serileri burada.
-///
-/// Kullanımı (bkz. `theme_context_extension.dart`):
 /// ```dart
-/// Container(color: context.ds.paper)
-/// Text('−12', style: AppTextStyles.readout.copyWith(color: context.ds.signalOff))
+/// Container(color: context.ds.sheet)
+/// Text('−12', style: context.readout.copyWith(color: context.ds.signalOff))
 /// ```
 @immutable
 class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   const AppSemanticColors({
+    required this.brandRed,
+    required this.sheet,
+    required this.scoreHighlight,
+    required this.controlThumb,
+    required this.pressedOverlay,
     required this.paper,
     required this.paperInk,
     required this.paperLine,
@@ -35,7 +33,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     required this.accentWash,
     required this.accentDim,
     required this.signalTrue,
+    required this.successContainer,
+    required this.signalWarn,
+    required this.warningContainer,
     required this.signalOff,
+    required this.errorContainer,
     required this.dataPractice,
     required this.dataTempo,
     required this.dataAccuracy,
@@ -45,96 +47,102 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     required this.shadowOverlay,
   });
 
-  // ─── Paper · nota sayfası ───────────────────────────────────────────
-  // Kâğıdın üzerinde chrome tokenı kullanılmaz. Kâğıt radiusLg ile
-  // yuvarlatılır, surface100 üzerinde durur ve gölge almaz.
+  /// Marka kırmızısı — tek vurgu. Sekme çizgisi, 1. vuruş, akort ibresi, kalem halkası. **Metin değil** (3:1 UI).
+  final Color brandRed;
 
-  /// Nota sayfasının yüzeyi.
+  /// Alt sayfa ve egzersiz ekranındaki nota kâğıdı (sheet); tema ile döner. Üstünde `onSurface` mürekkebi ve `scoreHighlight` kullanılır.
+  final Color sheet;
+
+  /// Aktif ölçü / seçili satır zemini. Üstündeki nota rengi değişmez (AA doğrulandı).
+  final Color scoreHighlight;
+
+  /// Segmented control seçili parça ve anahtar başparmağı.
+  final Color controlThumb;
+
+  /// Basılı satır / buton katmanı.
+  final Color pressedOverlay;
+
+  /// Her iki temada açık kâğıt (SVG varlıkları için). Tema ile dönen nota sayfası için [sheet].
   final Color paper;
 
-  /// Nota başları, saplar, bayraklar, anahtarlar, es'ler.
+  /// Açık kâğıt üzerindeki gravür işaretleri.
   final Color paperInk;
 
-  /// Porte çizgileri, ölçü çizgileri, ek çizgiler, tablatura çizgileri.
+  /// Açık kâğıt üzerindeki porte / ölçü çizgileri.
   final Color paperLine;
 
-  /// Parmak numaraları, ölçü numaraları, tablatura rakamları.
+  /// Açık kâğıt üzerindeki parmak ve ölçü numaraları.
   final Color paperMuted;
 
-  /// O an tınlayan veya seçili ölçünün zemini. Üstündeki nota [paperInk]
-  /// kalır — vurgu ölçünün tamamını kaplar, tek notayı değil.
+  /// Açık kâğıt üzerindeki aktif ölçü zemini.
   final Color paperAccent;
 
-  /// Kâğıt üzerindeki odak halkası. [focusRing] kâğıtta kaybolur.
+  /// Kâğıt üzerindeki odak halkası.
   final Color focusRingPaper;
 
-  // ─── Odak ───────────────────────────────────────────────────────────
-  /// Chrome yüzeylerinde klavye odağı: 2px kalınlık, 2px offset.
+  /// Klavye odağı: 2px, 2px offset.
   final Color focusRing;
 
-  // ─── Metin ──────────────────────────────────────────────────────────
-  /// Üçüncü seviye metin: bölüm etiketi, yardımcı satır, birim.
-  /// `ColorScheme`'in `onSurface` / `onSurfaceVariant` ikilisi yetmiyor —
-  /// bu onlardan bir kademe daha kısık.
+  /// Üçüncü seviye metin / pasif ikon (3:1). Gövde metni için değil.
   final Color inkSubtle;
 
-  // ─── Amber varyantları ──────────────────────────────────────────────
-  /// Amber **metin** ve ikonlar. `colorScheme.primary` metin olarak açık
-  /// temada 4.5:1 tutmaz; amber yazı her zaman bunu kullanır.
+  /// Metin butonu ve seçili etiket rengi — v4'te mürekkep.
   final Color accentText;
 
-  /// Amber içeriğin arkasındaki kısık zemin: seçili satır, aktif pratik
-  /// bandı, ipucu kutusu.
+  /// Seçili satır / ipucu kutusu zemini (= scoreHighlight).
   final Color accentWash;
 
-  /// Amber kenarlıklar ve ayraçlar, metronomun henüz çalmamış vuruşları.
+  /// Hafif kenarlık, çalmamış vuruş çizgisi (= line.separator).
   final Color accentDim;
 
-  // ─── Durum ──────────────────────────────────────────────────────────
-  /// Doğru olan her şey: akortta, doğru nota, tamamlanmış ödev.
+  /// state.success — akortta, doğru, tamamlandı.
   final Color signalTrue;
 
-  /// Doğru olmayan her şey: pes, tiz, yanlış nota, atlanan ölçü.
-  ///
-  /// **Renk doğruluğu söyler, yönü söylemez.** Pes ve tiz aynı renktir; yön
-  /// ibrenin yerinde, işaretli sayıda ve üçgen işarette okunur. Bu renk
-  /// hiçbir yerde tek başına görünmez — yanında her zaman bir kelime ya da
-  /// biçim bulunur.
+  /// Başarı bandı zemini.
+  final Color successContainer;
+
+  /// state.warning — mikrofon izni yok, gürültülü ortam.
+  final Color signalWarn;
+
+  /// Uyarı bandı zemini.
+  final Color warningContainer;
+
+  /// state.error — pes/tiz, yanlış, hata. Renk doğruluğu söyler, yönü söylemez; yanında kelime / işaretli sayı bulunur.
   final Color signalOff;
 
-  // ─── Grafik serileri ────────────────────────────────────────────────
+  /// Hata bandı zemini.
+  final Color errorContainer;
+
+  /// Grafik serisi 1 (sabit sıra).
   final Color dataPractice;
+
+  /// Grafik serisi 2.
   final Color dataTempo;
+
+  /// Grafik serisi 3.
   final Color dataAccuracy;
+
+  /// Grafik serisi 4.
   final Color dataSessions;
 
-  /// Yalnızca ızgara çizgileri. Eksen etiketleri `onSurfaceVariant` kullanır.
+  /// Yalnızca ızgara çizgileri.
   final Color dataGrid;
 
-  /// Kategorik seri sırası — **sabittir, döngüye sokulmaz.** Renk seriyi
-  /// takip eder, sırasını değil: bir filtre seri sayısını değiştirdiğinde
-  /// kalanlar yeniden boyanmaz. Dörtten fazla seri varsa kırp, katla veya
-  /// küçük çoklu kullan; beşinci bir renk üretme.
-  List<Color> get dataSeries => [
-    dataPractice,
-    dataTempo,
-    dataAccuracy,
-    dataSessions,
-  ];
+  /// Kategorik seri sırası — **sabit, döngüye sokulmaz.**
+  List<Color> get dataSeries => [dataPractice, dataTempo, dataAccuracy, dataSessions];
 
-  // ─── Gölge ──────────────────────────────────────────────────────────
-  // Derinliği gölge değil yüzey basamağı yapar. Bunlar yalnızca gerçekten
-  // zeminden ayrılması gereken kart ve yüzen katmanlar için.
-
-  /// `surface200` kartların zeminden ayrılması. Tek katman, 2px'i geçmez.
+  /// Zeminden ayrılması gereken kartlar için tek katman, 2px'i geçmez.
   final List<BoxShadow> shadowRaised;
 
-  /// Menü, popover, alt sayfa — gerçekten yüzen katmanlar.
+  /// Menü, popover, alt sayfa — yüzen katmanlar.
   final List<BoxShadow> shadowOverlay;
 
-  // ─── Temalar ────────────────────────────────────────────────────────
-
   static const dark = AppSemanticColors(
+    brandRed: AppColors.darkAccent,
+    sheet: AppColors.darkSheet,
+    scoreHighlight: AppColors.darkAccentWash,
+    controlThumb: AppColors.darkControlThumb,
+    pressedOverlay: AppColors.darkPressedOverlay,
     paper: AppColors.darkPaper,
     paperInk: AppColors.darkPaperInk,
     paperLine: AppColors.darkPaperLine,
@@ -147,7 +155,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     accentWash: AppColors.darkAccentWash,
     accentDim: AppColors.darkAccentDim,
     signalTrue: AppColors.darkSignalTrue,
+    successContainer: AppColors.darkSuccessContainer,
+    signalWarn: AppColors.darkSignalWarn,
+    warningContainer: AppColors.darkWarningContainer,
     signalOff: AppColors.darkSignalOff,
+    errorContainer: AppColors.darkErrorContainer,
     dataPractice: AppColors.darkDataPractice,
     dataTempo: AppColors.darkDataTempo,
     dataAccuracy: AppColors.darkDataAccuracy,
@@ -170,6 +182,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   );
 
   static const light = AppSemanticColors(
+    brandRed: AppColors.lightAccent,
+    sheet: AppColors.lightSheet,
+    scoreHighlight: AppColors.lightAccentWash,
+    controlThumb: AppColors.lightControlThumb,
+    pressedOverlay: AppColors.lightPressedOverlay,
     paper: AppColors.lightPaper,
     paperInk: AppColors.lightPaperInk,
     paperLine: AppColors.lightPaperLine,
@@ -182,7 +199,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     accentWash: AppColors.lightAccentWash,
     accentDim: AppColors.lightAccentDim,
     signalTrue: AppColors.lightSignalTrue,
+    successContainer: AppColors.lightSuccessContainer,
+    signalWarn: AppColors.lightSignalWarn,
+    warningContainer: AppColors.lightWarningContainer,
     signalOff: AppColors.lightSignalOff,
+    errorContainer: AppColors.lightErrorContainer,
     dataPractice: AppColors.lightDataPractice,
     dataTempo: AppColors.lightDataTempo,
     dataAccuracy: AppColors.lightDataAccuracy,
@@ -206,6 +227,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
 
   @override
   AppSemanticColors copyWith({
+    Color? brandRed,
+    Color? sheet,
+    Color? scoreHighlight,
+    Color? controlThumb,
+    Color? pressedOverlay,
     Color? paper,
     Color? paperInk,
     Color? paperLine,
@@ -218,7 +244,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     Color? accentWash,
     Color? accentDim,
     Color? signalTrue,
+    Color? successContainer,
+    Color? signalWarn,
+    Color? warningContainer,
     Color? signalOff,
+    Color? errorContainer,
     Color? dataPractice,
     Color? dataTempo,
     Color? dataAccuracy,
@@ -228,6 +258,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     List<BoxShadow>? shadowOverlay,
   }) {
     return AppSemanticColors(
+      brandRed: brandRed ?? this.brandRed,
+      sheet: sheet ?? this.sheet,
+      scoreHighlight: scoreHighlight ?? this.scoreHighlight,
+      controlThumb: controlThumb ?? this.controlThumb,
+      pressedOverlay: pressedOverlay ?? this.pressedOverlay,
       paper: paper ?? this.paper,
       paperInk: paperInk ?? this.paperInk,
       paperLine: paperLine ?? this.paperLine,
@@ -240,7 +275,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       accentWash: accentWash ?? this.accentWash,
       accentDim: accentDim ?? this.accentDim,
       signalTrue: signalTrue ?? this.signalTrue,
+      successContainer: successContainer ?? this.successContainer,
+      signalWarn: signalWarn ?? this.signalWarn,
+      warningContainer: warningContainer ?? this.warningContainer,
       signalOff: signalOff ?? this.signalOff,
+      errorContainer: errorContainer ?? this.errorContainer,
       dataPractice: dataPractice ?? this.dataPractice,
       dataTempo: dataTempo ?? this.dataTempo,
       dataAccuracy: dataAccuracy ?? this.dataAccuracy,
@@ -255,6 +294,11 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   AppSemanticColors lerp(ThemeExtension<AppSemanticColors>? other, double t) {
     if (other is! AppSemanticColors) return this;
     return AppSemanticColors(
+      brandRed: Color.lerp(brandRed, other.brandRed, t)!,
+      sheet: Color.lerp(sheet, other.sheet, t)!,
+      scoreHighlight: Color.lerp(scoreHighlight, other.scoreHighlight, t)!,
+      controlThumb: Color.lerp(controlThumb, other.controlThumb, t)!,
+      pressedOverlay: Color.lerp(pressedOverlay, other.pressedOverlay, t)!,
       paper: Color.lerp(paper, other.paper, t)!,
       paperInk: Color.lerp(paperInk, other.paperInk, t)!,
       paperLine: Color.lerp(paperLine, other.paperLine, t)!,
@@ -267,18 +311,18 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       accentWash: Color.lerp(accentWash, other.accentWash, t)!,
       accentDim: Color.lerp(accentDim, other.accentDim, t)!,
       signalTrue: Color.lerp(signalTrue, other.signalTrue, t)!,
+      successContainer: Color.lerp(successContainer, other.successContainer, t)!,
+      signalWarn: Color.lerp(signalWarn, other.signalWarn, t)!,
+      warningContainer: Color.lerp(warningContainer, other.warningContainer, t)!,
       signalOff: Color.lerp(signalOff, other.signalOff, t)!,
+      errorContainer: Color.lerp(errorContainer, other.errorContainer, t)!,
       dataPractice: Color.lerp(dataPractice, other.dataPractice, t)!,
       dataTempo: Color.lerp(dataTempo, other.dataTempo, t)!,
       dataAccuracy: Color.lerp(dataAccuracy, other.dataAccuracy, t)!,
       dataSessions: Color.lerp(dataSessions, other.dataSessions, t)!,
       dataGrid: Color.lerp(dataGrid, other.dataGrid, t)!,
-      shadowRaised:
-          BoxShadow.lerpList(shadowRaised, other.shadowRaised, t) ??
-          shadowRaised,
-      shadowOverlay:
-          BoxShadow.lerpList(shadowOverlay, other.shadowOverlay, t) ??
-          shadowOverlay,
+      shadowRaised: BoxShadow.lerpList(shadowRaised, other.shadowRaised, t) ?? shadowRaised,
+      shadowOverlay: BoxShadow.lerpList(shadowOverlay, other.shadowOverlay, t) ?? shadowOverlay,
     );
   }
 }

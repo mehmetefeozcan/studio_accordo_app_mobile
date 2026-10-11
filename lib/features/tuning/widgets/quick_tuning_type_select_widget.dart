@@ -1,7 +1,6 @@
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/features/tuning/store/tuning_store.dart';
 import 'package:studio_accordo_app_mobile/features/tuning/model/tuning_type.dart';
-import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
@@ -39,17 +38,17 @@ class QuickTuningTypeSelectWidget extends StatelessWidget {
         ),
         decoration: BoxDecoration(
           color: selected
-              ? context.colors.primary
-              : context.colors.surfaceContainer,
+              ? context.ds.actionBg
+              : context.ds.bgRaised,
           borderRadius: BorderRadius.circular(context.radiusPill),
-          border: Border.all(width: 1, color: context.colors.outlineVariant),
+          border: Border.all(width: 1, color: context.ds.lineSeparator),
         ),
         child: Text(
           type.label(context),
           style: context.numericS.copyWith(
             color: selected
-                ? context.colors.onPrimary
-                : context.colors.onSurfaceVariant,
+                ? context.ds.actionFg
+                : context.ds.textSecondary,
             fontWeight: FontWeight.w600,
           ),
         ),

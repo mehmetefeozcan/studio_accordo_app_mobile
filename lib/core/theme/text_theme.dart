@@ -21,22 +21,19 @@ class AppTextStyles {
   static TextStyle get largeTitle => GoogleFonts.newsreader(
     fontSize: 34.sp,
     height: 41 / 34,
-    fontWeight: FontWeight.w600,
+
     letterSpacing: -0.01 * 34,
   );
 
   /// 88/88 · w500 — akort ekranında algılanan nota (radyal ibre içinde).
-  static TextStyle get displayNote => GoogleFonts.newsreader(
-    fontSize: 88.sp,
-    height: 1,
-    fontWeight: FontWeight.w500,
-  );
+  static TextStyle get displayNote =>
+      GoogleFonts.newsreader(fontSize: 88.sp, height: 1);
 
   /// 72/76 · w500 — metronom BPM'i. Ekran başına tek.
   static TextStyle get displayBpm => GoogleFonts.newsreader(
     fontSize: 72.sp,
     height: 76 / 72,
-    fontWeight: FontWeight.w500,
+
     letterSpacing: -0.02 * 72,
   );
 
@@ -45,46 +42,34 @@ class AppTextStyles {
   static TextStyle get pencilNote => GoogleFonts.newsreader(
     fontSize: 19.sp,
     height: 24 / 19,
-    fontWeight: FontWeight.w400,
+
     fontStyle: FontStyle.italic,
   );
 
   // ─── Arayüz · sistem yazı tipi ──────────────────────────────────────
 
   /// 28/34 · w600 — iç ekran başlığı.
-  static TextStyle get title1 => TextStyle(
-    fontSize: 28.sp,
-    height: 34 / 28,
-    fontWeight: FontWeight.w600,
-    letterSpacing: -0.01 * 28,
-  );
+  static TextStyle get title1 =>
+      TextStyle(fontSize: 28.sp, height: 34 / 28, letterSpacing: -0.01 * 28);
 
   /// 22/28 · w600 — kart / alt sayfa başlığı, boş durum başlığı.
-  static TextStyle get title2 => TextStyle(
-    fontSize: 22.sp,
-    height: 28 / 22,
-    fontWeight: FontWeight.w600,
-  );
+  static TextStyle get title2 => TextStyle(fontSize: 22.sp, height: 28 / 22);
 
   /// 17/22 — gövde metni, liste satırı, buton yazısı.
-  static TextStyle get body =>
-      TextStyle(fontSize: 17.sp, height: 22 / 17, fontWeight: FontWeight.w400);
+  static TextStyle get body => TextStyle(fontSize: 17.sp, height: 22 / 17);
 
   /// 17/22 · w600 — gövde içinde vurgu, liste satırının başlığı.
   static TextStyle get bodyStrong =>
-      TextStyle(fontSize: 17.sp, height: 22 / 17, fontWeight: FontWeight.w600);
+      TextStyle(fontSize: 17.sp, height: 22 / 17);
 
   /// 15/20 — satır alt başlığı, ikincil gövde.
-  static TextStyle get callout =>
-      TextStyle(fontSize: 15.sp, height: 20 / 15, fontWeight: FontWeight.w400);
+  static TextStyle get callout => TextStyle(fontSize: 15.sp, height: 20 / 15);
 
   /// 13/18 — yardımcı metin, zaman damgası, alan altı açıklaması.
-  static TextStyle get caption =>
-      TextStyle(fontSize: 13.sp, height: 18 / 13, fontWeight: FontWeight.w400);
+  static TextStyle get caption => TextStyle(fontSize: 13.sp, height: 18 / 13);
 
   /// 12/16 · w500 — sekme etiketi, rozet. **Büyük harfe çevrilmez.**
-  static TextStyle get label =>
-      TextStyle(fontSize: 12.sp, height: 16 / 12, fontWeight: FontWeight.w500);
+  static TextStyle get label => TextStyle(fontSize: 12.sp, height: 16 / 12);
 
   // ─── Ölçüm · IBM Plex Mono ──────────────────────────────────────────
 
@@ -93,7 +78,7 @@ class AppTextStyles {
   static TextStyle get readoutXl => GoogleFonts.ibmPlexMono(
     fontSize: 54.sp,
     height: 56 / 54,
-    fontWeight: FontWeight.w500,
+
     fontFeatures: const [FontFeature.tabularFigures()],
   );
 
@@ -101,7 +86,7 @@ class AppTextStyles {
   static TextStyle get readout => GoogleFonts.ibmPlexMono(
     fontSize: 22.sp,
     height: 28 / 22,
-    fontWeight: FontWeight.w500,
+
     fontFeatures: const [FontFeature.tabularFigures()],
   );
 
@@ -109,7 +94,7 @@ class AppTextStyles {
   static TextStyle get numericS => GoogleFonts.ibmPlexMono(
     fontSize: 13.sp,
     height: 18 / 13,
-    fontWeight: FontWeight.w500,
+
     fontFeatures: const [FontFeature.tabularFigures()],
   );
 
@@ -118,11 +103,8 @@ class AppTextStyles {
   /// SMuFL glifleri için: `fontSize = 4 × porte aralığı`. Alt küme
   /// `assets/fonts/Bravura-subset.otf` (sol anahtarı, ritim değerleri, diyez,
   /// es'ler, ölçü birimi rakamları). Lisans: SIL OFL.
-  static TextStyle smufl(double staffSpace) => TextStyle(
-    fontFamily: 'Bravura',
-    fontSize: 4 * staffSpace,
-    height: 1,
-  );
+  static TextStyle smufl(double staffSpace) =>
+      TextStyle(fontFamily: 'Bravura', fontSize: 4 * staffSpace, height: 1);
 
   // ─── Eski adlar (geçiş) ─────────────────────────────────────────────
   // Mevcut widget'lar bu adları kullanıyor; yeni kodda sağdaki adı yaz.

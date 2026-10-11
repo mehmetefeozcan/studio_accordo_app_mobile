@@ -64,7 +64,7 @@ class _NotFoundViewState extends State<NotFoundView>
                 child: Text(
                   context.l10n.pageNotFound,
                   style: context.bodyMedium!.copyWith(
-                    color: context.colors.onSurfaceVariant,
+                    color: context.ds.textSecondary,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -78,7 +78,7 @@ class _NotFoundViewState extends State<NotFoundView>
                 child: Text(
                   context.l10n.backToToday,
                   style: context.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: context.ds.actionFg,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
@@ -96,7 +96,7 @@ class _NotFoundViewState extends State<NotFoundView>
                 child: Text(
                   context.l10n.backToPrevious,
                   style: context.bodyMedium!.copyWith(
-                    color: context.colors.onSurface,
+                    color: context.ds.textPrimary,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

@@ -20,7 +20,7 @@ Kodda tek doğruluk kaynağı `lib/core/theme/` — tasarım değişirse önce o
 |---|---|
 | `app_colors.dart` | Ham renkler (`dark*` / `light*`). Widget'larda doğrudan kullanma; tema üzerinden oku. |
 | `app_theme_colors.dart` | `ColorScheme` eşlemesi (açık + koyu). |
-| `app_semantic_colors.dart` | `ThemeExtension`: marka kırmızısı, durum + kapları, `sheet`, `scoreHighlight`, `controlThumb`, `pressedOverlay`, grafik serileri. Erişim: `context.ds`. |
+| `app_semantic_colors.dart` | **Tüm** renk tokenları (`ThemeExtension`): yüzey, metin, eylem, çizgi, marka kırmızısı, durumlar, nota kâğıdı, grafik serileri. Erişim: `context.ds`. |
 | `text_theme.dart` | `AppTextStyles` + Material `TextTheme`. |
 | `app_theme.dart` | `ThemeData` (buton, girdi, alt sayfa, anahtar, kaydırıcı …). |
 | `core/extension/theme_context_extension.dart` | `context.ds`, metin kısayolları, `space1..8`, `radius*`, `scoreSheet`, `cardSurface`, `signalForCents`. |
@@ -59,6 +59,6 @@ Kodda tek doğruluk kaynağı `lib/core/theme/` — tasarım değişirse önce o
 
 ### Henüz uygulanmayanlar / bilinen borçlar
 - Radyal akort ibresi, v1 metronom çubukları, egzersiz nota render'ı ve kâğıt greni henüz widget olarak yok; temel tokenlar hazır.
-- Renk erişimi: widget'larda yalnızca `context.colors.*` (ColorScheme) veya `context.ds.*` (AppSemanticColors); `AppColors` yalnızca `core/theme` içinde. Açık/koyu ayrımı böylece otomatik.
+- Renk erişimi: widget'larda **yalnızca `context.ds.*`** (AppSemanticColors). v4 token adları birebir: `bgBase/bgRaised/bgSunken`, `textPrimary/textSecondary`, `actionBg/actionFg`, `lineSeparator/lineControl`, `brandRed`, `signalTrue/signalWarn/signalOff` (+ `onSignalTrue`, kaplar), `sheet`, `scoreHighlight`, `controlThumb`, `pressedOverlay`, `inkSubtle`, `paper*`. `context.colors` / `Theme.of(context).colorScheme` ve `AppColors` widget'larda kullanılmaz; ColorScheme yalnızca Material widget'ları için `core/theme` içinde aynı değerlerden beslenir. Açık/koyu ayrımı böylece otomatik.
 - Uygulama ikonu kaynakları (`assets/logo/*.png`) yeni logoyla (diyapazon + porte, notasız, #1F1812 zemin) güncellendi; platform ikonlarını üretmek için `dart run flutter_launcher_icons` çalıştır. Çizgi ikonlar (`tuner/metronome/scan/chevron`) `colorFilter` ile tema renginden boyanır; `notes`, `whole_rest_measure`, `wip_music_staff` açık kâğıt varlıklarıdır (`ds.paper` üstünde).
 - Grafik serileri v4'te tanımlı değil; ilerleme ekranı için eski seriler korundu.

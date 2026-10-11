@@ -1,4 +1,4 @@
-import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 
 import 'package:flutter/material.dart';
 
@@ -12,7 +12,7 @@ class Point extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      decoration: BoxDecoration(shape: BoxShape.circle, color: color ?? context.colors.primary),
+      decoration: BoxDecoration(shape: BoxShape.circle, color: color ?? context.ds.actionBg),
     );
   }
 }

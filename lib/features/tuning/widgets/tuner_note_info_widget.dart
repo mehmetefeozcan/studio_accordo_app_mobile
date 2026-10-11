@@ -35,7 +35,7 @@ class TunerNoteInfoWidget extends StatelessWidget {
                   TextSpan(
                     text: reading?.octave.toString() ?? "",
                     style: context.readout.copyWith(
-                      color: context.colors.onSurfaceVariant,
+                      color: context.ds.textSecondary,
                     ),
                   ),
                 ],
@@ -46,7 +46,7 @@ class TunerNoteInfoWidget extends StatelessWidget {
                   ? "— Hz"
                   : "${reading.frequency.toStringAsFixed(2)} Hz",
               style: context.numericS.copyWith(
-                color: context.colors.onSurfaceVariant,
+                color: context.ds.textSecondary,
                 fontSize: 15.sp,
               ),
             ),

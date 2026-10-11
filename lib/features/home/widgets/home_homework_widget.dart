@@ -64,7 +64,7 @@ class HomeHomeworkWidget extends StatelessWidget {
       width: context.width,
       padding: context.cardPadding,
       decoration: BoxDecoration(
-        color: context.colors.surfaceContainer,
+        color: context.ds.bgRaised,
         borderRadius: BorderRadius.circular(context.radiusMd),
       ),
       child: Column(
@@ -96,13 +96,13 @@ class HomeHomeworkWidget extends StatelessWidget {
               Text(
                 "${item.lastWorkingBpm ?? '-'} / ${item.bpm} BPM",
                 style: context.numericS.copyWith(
-                  color: context.colors.onSurfaceVariant,
+                  color: context.ds.textSecondary,
                 ),
               ),
               Text(
                 "${context.l10n.delivery}: ${parseDeliveryDate()}",
                 style: context.bodySmall!.copyWith(
-                  color: context.colors.onSurfaceVariant,
+                  color: context.ds.textSecondary,
                 ),
               ),
             ],

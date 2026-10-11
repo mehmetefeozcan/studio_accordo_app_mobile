@@ -1,4 +1,4 @@
-import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 
 import 'package:flutter/material.dart';
 
@@ -34,7 +34,7 @@ class CustomCircleLoading extends StatelessWidget {
       width: loadingSize,
       height: loadingSize,
       child: CircularProgressIndicator(
-        color: color ?? context.colors.primary,
+        color: color ?? context.ds.actionBg,
         strokeWidth: loadingWidth,
       ),
     );

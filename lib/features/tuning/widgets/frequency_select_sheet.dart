@@ -44,7 +44,7 @@ class FrequencySelectSheet extends StatelessWidget {
             child: Text(
               context.l10n.done,
               style: context.bodyMedium!.copyWith(
-                color: context.colors.onPrimary,
+                color: context.ds.actionFg,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -67,7 +67,7 @@ class FrequencySelectSheet extends StatelessWidget {
           child: SvgPicture.asset(
             AppAssets.icons.close,
             colorFilter: ColorFilter.mode(
-              context.colors.onSurfaceVariant,
+              context.ds.textSecondary,
               BlendMode.srcIn,
             ),
           ),
@@ -104,7 +104,7 @@ class FrequencySelectSheet extends StatelessWidget {
                     TextSpan(
                       text: "Hz",
                       style: context.labelLarge!.copyWith(
-                        color: context.colors.onSurfaceVariant,
+                        color: context.ds.textSecondary,
                       ),
                     ),
                   ],
@@ -162,17 +162,17 @@ class FrequencySelectSheet extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: context.space3),
         decoration: BoxDecoration(
           color: selected
-              ? context.colors.primary
-              : context.colors.surfaceContainerHigh,
+              ? context.ds.actionBg
+              : context.ds.bgSunken,
           borderRadius: BorderRadius.circular(context.radiusPill),
-          border: Border.all(width: 1, color: context.colors.outlineVariant),
+          border: Border.all(width: 1, color: context.ds.lineSeparator),
         ),
         child: Center(
           child: Text(
             preset.toStringAsFixed(0),
             style: context.numericS.copyWith(
               color: selected
-                  ? context.colors.onPrimary
+                  ? context.ds.actionFg
                   : context.ds.inkSubtle,
               fontWeight: FontWeight.w600,
             ),

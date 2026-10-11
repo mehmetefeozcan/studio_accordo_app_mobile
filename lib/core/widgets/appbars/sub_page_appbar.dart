@@ -1,3 +1,4 @@
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
 
@@ -28,7 +29,7 @@ class SubPageAppbar extends StatelessWidget implements PreferredSizeWidget {
       surfaceTintColor: Colors.transparent,
       title: Text(
         title,
-        style: context.displayMedium!.copyWith(color: context.colors.onSurface),
+        style: context.displayMedium!.copyWith(color: context.ds.textPrimary),
       ),
       actions: actions,
       leading: GestureDetector(
@@ -42,7 +43,7 @@ class SubPageAppbar extends StatelessWidget implements PreferredSizeWidget {
             height: 44.h,
             fit: BoxFit.scaleDown,
             colorFilter: ColorFilter.mode(
-              context.colors.onSurface,
+              context.ds.textPrimary,
               BlendMode.srcIn,
             ),
           ),

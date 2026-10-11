@@ -24,7 +24,7 @@ abstract class _ThemeStore with Store {
 
   @action
   Future<void> loadTheme() async {
-    isDarkMode = settingsStorage.get<bool>(_key, defaultValue: true) ?? false;
+    isDarkMode = settingsStorage.get<bool>(_key, defaultValue: false) ?? false;
   }
 
   @action

@@ -47,7 +47,7 @@ class TuningStringsWidget extends StatelessWidget {
     final green = context.ds.signalTrue;
 
     // Akortta: success zemini; üstündeki metin `onTertiary` (AA doğrulanmış çift).
-    final onGreen = context.colors.onTertiary;
+    final onGreen = context.ds.onSignalTrue;
 
     return GestureDetector(
       onTap: () => store.selectString(index),
@@ -61,18 +61,18 @@ class TuningStringsWidget extends StatelessWidget {
           color: inTune
               ? green
               : selected
-              ? context.colors.primary
-              : context.colors.surfaceContainer,
+              ? context.ds.actionBg
+              : context.ds.bgRaised,
           borderRadius: BorderRadius.circular(context.radiusSm),
           // Çalınan (seçili) tel akortlandıysa da ayırt edilsin: yeşil zeminde
           // birincil renk çerçeve.
           border: Border.all(
             width: selected ? 2 : 1,
             color: selected
-                ? context.colors.primary
+                ? context.ds.actionBg
                 : inTune
                 ? green
-                : context.colors.outlineVariant,
+                : context.ds.lineSeparator,
           ),
         ),
         child: Center(
@@ -82,8 +82,8 @@ class TuningStringsWidget extends StatelessWidget {
               color: inTune
                   ? onGreen
                   : selected
-                  ? context.colors.onPrimary
-                  : context.colors.onSurface,
+                  ? context.ds.actionFg
+                  : context.ds.textPrimary,
             ),
           ),
         ),

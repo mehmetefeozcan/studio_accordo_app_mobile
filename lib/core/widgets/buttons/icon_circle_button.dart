@@ -1,5 +1,4 @@
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
-import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,14 +21,14 @@ class IconCircleButton extends StatelessWidget {
       child: Container(
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: context.colors.surfaceContainerHigh,
+          color: context.ds.bgSunken,
         ),
         padding: EdgeInsets.all(context.space4),
         child: Center(
           child: SvgPicture.asset(
             icon,
             colorFilter: ColorFilter.mode(
-              context.colors.onSurface,
+              context.ds.textPrimary,
               BlendMode.srcIn,
             ),
           ),

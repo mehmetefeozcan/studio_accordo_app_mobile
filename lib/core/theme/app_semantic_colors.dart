@@ -17,6 +17,16 @@ import 'app_colors.dart';
 class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   const AppSemanticColors({
     required this.brandRed,
+    required this.bgBase,
+    required this.bgRaised,
+    required this.bgSunken,
+    required this.textPrimary,
+    required this.textSecondary,
+    required this.actionBg,
+    required this.actionFg,
+    required this.lineSeparator,
+    required this.lineControl,
+    required this.onSignalTrue,
     required this.sheet,
     required this.scoreHighlight,
     required this.controlThumb,
@@ -49,6 +59,36 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
 
   /// Marka kırmızısı — tek vurgu. Sekme çizgisi, 1. vuruş, akort ibresi, kalem halkası. **Metin değil** (3:1 UI).
   final Color brandRed;
+
+  /// Ekran zemini (bg.base).
+  final Color bgBase;
+
+  /// Kart, grup, liste satırı, tab bar (bg.raised).
+  final Color bgRaised;
+
+  /// Girdi, çukur alan, segmented ray, pasif dolgu (bg.sunken).
+  final Color bgSunken;
+
+  /// Birincil metin ve ikon (text.primary).
+  final Color textPrimary;
+
+  /// İkincil metin (text.secondary).
+  final Color textSecondary;
+
+  /// Birincil eylem dolgusu — mürekkep (action.bg).
+  final Color actionBg;
+
+  /// Birincil eylem üstündeki metin / ikon (action.fg).
+  final Color actionFg;
+
+  /// Hafif ayraç / kart kenarı (line.separator).
+  final Color lineSeparator;
+
+  /// Kontrol çizgisi: girdi, segmented, yuvarlak buton (line.control, 3:1).
+  final Color lineControl;
+
+  /// `signalTrue` dolgusu üstündeki metin.
+  final Color onSignalTrue;
 
   /// Alt sayfa ve egzersiz ekranındaki nota kâğıdı (sheet); tema ile döner. Üstünde `onSurface` mürekkebi ve `scoreHighlight` kullanılır.
   final Color sheet;
@@ -139,6 +179,16 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
 
   static const dark = AppSemanticColors(
     brandRed: AppColors.darkAccent,
+    bgBase: AppColors.darkSurface100,
+    bgRaised: AppColors.darkSurface200,
+    bgSunken: AppColors.darkSurface300,
+    textPrimary: AppColors.darkInk,
+    textSecondary: AppColors.darkInkMuted,
+    actionBg: AppColors.darkAction,
+    actionFg: AppColors.darkOnAction,
+    lineSeparator: AppColors.darkBorder,
+    lineControl: AppColors.darkBorderStrong,
+    onSignalTrue: AppColors.darkSurface100,
     sheet: AppColors.darkSheet,
     scoreHighlight: AppColors.darkAccentWash,
     controlThumb: AppColors.darkControlThumb,
@@ -183,6 +233,16 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
 
   static const light = AppSemanticColors(
     brandRed: AppColors.lightAccent,
+    bgBase: AppColors.lightSurface100,
+    bgRaised: AppColors.lightSurface200,
+    bgSunken: AppColors.lightSurface300,
+    textPrimary: AppColors.lightInk,
+    textSecondary: AppColors.lightInkMuted,
+    actionBg: AppColors.lightAction,
+    actionFg: AppColors.lightOnAction,
+    lineSeparator: AppColors.lightBorder,
+    lineControl: AppColors.lightBorderStrong,
+    onSignalTrue: AppColors.lightSurface100,
     sheet: AppColors.lightSheet,
     scoreHighlight: AppColors.lightAccentWash,
     controlThumb: AppColors.lightControlThumb,
@@ -228,6 +288,16 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   @override
   AppSemanticColors copyWith({
     Color? brandRed,
+    Color? bgBase,
+    Color? bgRaised,
+    Color? bgSunken,
+    Color? textPrimary,
+    Color? textSecondary,
+    Color? actionBg,
+    Color? actionFg,
+    Color? lineSeparator,
+    Color? lineControl,
+    Color? onSignalTrue,
     Color? sheet,
     Color? scoreHighlight,
     Color? controlThumb,
@@ -259,6 +329,16 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   }) {
     return AppSemanticColors(
       brandRed: brandRed ?? this.brandRed,
+      bgBase: bgBase ?? this.bgBase,
+      bgRaised: bgRaised ?? this.bgRaised,
+      bgSunken: bgSunken ?? this.bgSunken,
+      textPrimary: textPrimary ?? this.textPrimary,
+      textSecondary: textSecondary ?? this.textSecondary,
+      actionBg: actionBg ?? this.actionBg,
+      actionFg: actionFg ?? this.actionFg,
+      lineSeparator: lineSeparator ?? this.lineSeparator,
+      lineControl: lineControl ?? this.lineControl,
+      onSignalTrue: onSignalTrue ?? this.onSignalTrue,
       sheet: sheet ?? this.sheet,
       scoreHighlight: scoreHighlight ?? this.scoreHighlight,
       controlThumb: controlThumb ?? this.controlThumb,
@@ -295,6 +375,16 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     if (other is! AppSemanticColors) return this;
     return AppSemanticColors(
       brandRed: Color.lerp(brandRed, other.brandRed, t)!,
+      bgBase: Color.lerp(bgBase, other.bgBase, t)!,
+      bgRaised: Color.lerp(bgRaised, other.bgRaised, t)!,
+      bgSunken: Color.lerp(bgSunken, other.bgSunken, t)!,
+      textPrimary: Color.lerp(textPrimary, other.textPrimary, t)!,
+      textSecondary: Color.lerp(textSecondary, other.textSecondary, t)!,
+      actionBg: Color.lerp(actionBg, other.actionBg, t)!,
+      actionFg: Color.lerp(actionFg, other.actionFg, t)!,
+      lineSeparator: Color.lerp(lineSeparator, other.lineSeparator, t)!,
+      lineControl: Color.lerp(lineControl, other.lineControl, t)!,
+      onSignalTrue: Color.lerp(onSignalTrue, other.onSignalTrue, t)!,
       sheet: Color.lerp(sheet, other.sheet, t)!,
       scoreHighlight: Color.lerp(scoreHighlight, other.scoreHighlight, t)!,
       controlThumb: Color.lerp(controlThumb, other.controlThumb, t)!,

@@ -1,3 +1,4 @@
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'button_metrics.dart';
@@ -36,7 +37,7 @@ class CustomElevatedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final scheme = Theme.of(context).colorScheme;
+    final ds = context.ds;
     final disabled = onPressed == null || isLoading;
     final shape = BorderRadius.circular(radius ?? 8);
 
@@ -47,10 +48,10 @@ class CustomElevatedButton extends StatelessWidget {
     final button = FilledButton(
       onPressed: disabled ? null : onPressed,
       style: FilledButton.styleFrom(
-        backgroundColor: color ?? scheme.primary,
-        foregroundColor: foregroundColor ?? scheme.onPrimary,
-        disabledBackgroundColor: disabledColor ?? scheme.surfaceContainerHigh,
-        disabledForegroundColor: scheme.onSurfaceVariant,
+        backgroundColor: color ?? ds.actionBg,
+        foregroundColor: foregroundColor ?? ds.actionFg,
+        disabledBackgroundColor: disabledColor ?? ds.bgSunken,
+        disabledForegroundColor: ds.textSecondary,
         overlayColor: splashColor,
         minimumSize: Size(0, size.minHeight),
         padding: padding ?? size.padding,

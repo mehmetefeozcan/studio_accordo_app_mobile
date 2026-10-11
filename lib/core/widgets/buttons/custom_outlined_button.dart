@@ -1,4 +1,4 @@
-import 'package:studio_accordo_app_mobile/core/theme/app_semantic_colors.dart';
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:flutter/material.dart';
 
 import 'button_metrics.dart';
@@ -33,22 +33,20 @@ class CustomOutlinedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final scheme = theme.colorScheme;
-    final ds = theme.extension<AppSemanticColors>();
+    final ds = context.ds;
 
     final danger = tone == AppButtonTone.danger;
-    final signalOff = ds?.signalOff ?? scheme.error;
+    final signalOff = ds.signalOff;
 
-    final strokeColor = color ?? (danger ? signalOff : scheme.outline);
-    final labelColor = color ?? (danger ? signalOff : scheme.onSurface);
+    final strokeColor = color ?? (danger ? signalOff : ds.lineControl);
+    final labelColor = color ?? (danger ? signalOff : ds.textPrimary);
 
     final button = OutlinedButton(
       onPressed: onPressed,
       style:
           OutlinedButton.styleFrom(
             foregroundColor: labelColor,
-            disabledForegroundColor: scheme.onSurfaceVariant,
+            disabledForegroundColor: ds.textSecondary,
             overlayColor: splashColor,
             side: BorderSide(color: strokeColor, width: borderWidth ?? 1),
             minimumSize: Size(0, size.minHeight),
@@ -60,7 +58,7 @@ class CustomOutlinedButton extends StatelessWidget {
           ).copyWith(
             side: WidgetStateProperty.resolveWith((states) {
               final c = states.contains(WidgetState.disabled)
-                  ? scheme.outlineVariant
+                  ? ds.lineSeparator
                   : strokeColor;
               return BorderSide(color: c, width: borderWidth ?? 1);
             }),

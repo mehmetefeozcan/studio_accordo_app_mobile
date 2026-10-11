@@ -22,9 +22,9 @@ class HomeShortcutButtonWidget extends StatelessWidget {
           horizontal: context.space3,
         ),
         decoration: BoxDecoration(
-          color: context.colors.surfaceContainer,
+          color: context.ds.bgRaised,
           borderRadius: BorderRadius.circular(context.radiusMd),
-          border: Border.all(width: 1, color: context.colors.outlineVariant),
+          border: Border.all(width: 1, color: context.ds.lineSeparator),
         ),
         child: Center(
           child: Column(
@@ -34,7 +34,7 @@ class HomeShortcutButtonWidget extends StatelessWidget {
               SvgPicture.asset(
                 params.icon,
                 colorFilter: ColorFilter.mode(
-                  context.colors.onSurface,
+                  context.ds.textPrimary,
                   BlendMode.srcIn,
                 ),
               ),

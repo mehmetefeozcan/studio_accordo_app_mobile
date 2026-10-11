@@ -122,7 +122,7 @@ extension StudioAccordoTheme on BuildContext {
   BoxDecoration get scoreSheet => BoxDecoration(
     color: ds.sheet,
     borderRadius: BorderRadius.circular(6.r),
-    border: Border.all(color: Theme.of(this).colorScheme.outlineVariant),
+    border: Border.all(color: ds.lineSeparator),
     boxShadow: ds.shadowRaised,
   );
 
@@ -138,7 +138,7 @@ extension StudioAccordoTheme on BuildContext {
   /// Kart kabı: `surface200`, `radiusMd`, gölgesiz — derinliği yüzey
   /// basamağı anlatır.
   BoxDecoration get cardSurface => BoxDecoration(
-    color: Theme.of(this).colorScheme.surface,
+    color: ds.bgRaised,
     borderRadius: borderRadiusMd,
   );
 

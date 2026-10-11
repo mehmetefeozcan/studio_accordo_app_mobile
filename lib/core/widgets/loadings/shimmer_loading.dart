@@ -1,3 +1,4 @@
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:flutter/material.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -6,8 +7,8 @@ class ShimmerLoading {
   /// dolgular yalnızca maskedir, görünen renk değildir.
   static Widget _shimmer(Widget child) => Builder(
     builder: (context) => Shimmer.fromColors(
-      baseColor: Theme.of(context).colorScheme.surfaceContainerHigh,
-      highlightColor: Theme.of(context).colorScheme.surfaceContainerHighest,
+      baseColor: context.ds.bgSunken,
+      highlightColor: context.ds.sheet,
       child: child,
     ),
   );

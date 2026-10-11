@@ -31,7 +31,7 @@ class HomeLastPracticedWidget extends StatelessWidget {
       width: context.width,
       padding: context.cardPadding,
       decoration: BoxDecoration(
-        color: context.colors.surfaceContainer,
+        color: context.ds.bgRaised,
         borderRadius: BorderRadius.circular(context.radiusMd),
       ),
       child: Row(

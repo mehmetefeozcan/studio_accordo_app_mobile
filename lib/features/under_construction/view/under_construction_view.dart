@@ -70,7 +70,7 @@ class _UnderConstructionViewState extends State<UnderConstructionView>
                 child: Text(
                   context.l10n.backToToday,
                   style: context.bodyMedium!.copyWith(
-                    color: Theme.of(context).colorScheme.onPrimary,
+                    color: context.ds.actionFg,
                     fontWeight: FontWeight.w600,
                   ),
                 ),

@@ -1,5 +1,4 @@
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
-import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
@@ -76,7 +75,7 @@ class TunerReadoutWidget extends StatelessWidget {
       width: 1.w,
       height: 18.w,
       decoration: BoxDecoration(
-        border: Border.all(color: context.colors.outline),
+        border: Border.all(color: context.ds.lineControl),
       ),
     );
   }
@@ -86,7 +85,7 @@ class TunerReadoutWidget extends StatelessWidget {
       width: 1.w,
       height: 10.w,
       decoration: BoxDecoration(
-        border: Border.all(color: context.colors.outlineVariant),
+        border: Border.all(color: context.ds.lineSeparator),
       ),
     );
   }

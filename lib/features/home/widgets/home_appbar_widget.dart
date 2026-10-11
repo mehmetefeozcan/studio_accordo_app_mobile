@@ -29,7 +29,7 @@ class HomeAppbarWidget extends StatelessWidget {
             Text(
               greeting.label(context),
               style: context.displayMedium!.copyWith(
-                color: context.colors.onSurface,
+                color: context.ds.textPrimary,
               ),
             ),
           ],
@@ -38,7 +38,7 @@ class HomeAppbarWidget extends StatelessWidget {
         SvgPicture.asset(
           AppAssets.icons.settings,
           colorFilter: ColorFilter.mode(
-            context.colors.onSurfaceVariant,
+            context.ds.textSecondary,
             BlendMode.srcIn,
           ),
         ),

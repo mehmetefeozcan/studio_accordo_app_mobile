@@ -5,7 +5,6 @@ import 'package:studio_accordo_app_mobile/core/routing/main_shell.dart';
 
 import 'package:go_router/go_router.dart';
 
-// Page Imports
 import 'package:studio_accordo_app_mobile/features/under_construction/view/under_construction_view.dart';
 import 'package:studio_accordo_app_mobile/features/tuning/view/tuning_view.dart';
 import 'package:studio_accordo_app_mobile/features/splash/view/splash_view.dart';
@@ -42,7 +41,6 @@ class MainRouter {
           pageBuilder: (context, state) {
             return RouterTransitionHelper.build(
               state: state,
-              // child: const MyLibraryView(),
               child: UnderConstructionView(title: context.l10n.library),
               type: PageTransitionType.fade,
               useCupertinoOnIOS: false,
@@ -54,7 +52,6 @@ class MainRouter {
           pageBuilder: (context, state) {
             return RouterTransitionHelper.build(
               state: state,
-              // child: const ProgressView(),
               child: UnderConstructionView(title: context.l10n.progress),
               type: PageTransitionType.fade,
               useCupertinoOnIOS: false,
@@ -66,7 +63,6 @@ class MainRouter {
           pageBuilder: (context, state) {
             return RouterTransitionHelper.build(
               state: state,
-              // child: const ProfileView(),
               child: UnderConstructionView(title: context.l10n.profile),
               type: PageTransitionType.fade,
               useCupertinoOnIOS: false,

@@ -5,7 +5,6 @@ import 'package:studio_accordo_app_mobile/features/tuning/model/tuning_type.dart
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
-/// Hazır akort düzenleri arasında yatay geçiş.
 class QuickTuningTypeSelectWidget extends StatelessWidget {
   final TuningStore store;
 
@@ -37,18 +36,14 @@ class QuickTuningTypeSelectWidget extends StatelessWidget {
           horizontal: context.space6,
         ),
         decoration: BoxDecoration(
-          color: selected
-              ? context.ds.actionBg
-              : context.ds.bgRaised,
+          color: selected ? context.ds.actionBg : context.ds.bgRaised,
           borderRadius: BorderRadius.circular(context.radiusPill),
           border: Border.all(width: 1, color: context.ds.lineSeparator),
         ),
         child: Text(
           type.label(context),
           style: context.numericS.copyWith(
-            color: selected
-                ? context.ds.actionFg
-                : context.ds.textSecondary,
+            color: selected ? context.ds.actionFg : context.ds.textSecondary,
             fontWeight: FontWeight.w600,
           ),
         ),

@@ -1,5 +1,3 @@
-// splash_view.dart
-
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/core/routing/routes/main/main_routes.dart';
 import 'package:studio_accordo_app_mobile/features/splash/store/splash_store.dart';

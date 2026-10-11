@@ -6,7 +6,6 @@ import 'package:studio_accordo_app_mobile/core/widgets/index.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
-/// Haftanın pratik süresi, hedefe göre durumu ve geçen haftaya farkı.
 class HomeWeeklyProgressWidget extends StatelessWidget {
   final WeeklyProgress progress;
 
@@ -54,10 +53,7 @@ class HomeWeeklyProgressWidget extends StatelessWidget {
         Text.rich(
           TextSpan(
             children: [
-              TextSpan(
-                text: progress.hours.toString(),
-                style: context.readout,
-              ),
+              TextSpan(text: progress.hours.toString(), style: context.readout),
               TextSpan(
                 text: " ${context.l10n.h} ",
                 style: context.bodySmall!.copyWith(
@@ -94,9 +90,7 @@ class HomeWeeklyProgressWidget extends StatelessWidget {
         children: [
           TextSpan(
             text: context.l10n.comparedToLastWeek,
-            style: context.bodySmall!.copyWith(
-              color: context.ds.textSecondary,
-            ),
+            style: context.bodySmall!.copyWith(color: context.ds.textSecondary),
           ),
           TextSpan(
             text: " $sign${diff.abs()} ${context.l10n.min}",
@@ -109,9 +103,7 @@ class HomeWeeklyProgressWidget extends StatelessWidget {
           TextSpan(
             text:
                 " · ${progress.metronomeHours} ${context.l10n.theClockWithMetronome}",
-            style: context.bodySmall!.copyWith(
-              color: context.ds.textSecondary,
-            ),
+            style: context.bodySmall!.copyWith(color: context.ds.textSecondary),
           ),
         ],
       ),

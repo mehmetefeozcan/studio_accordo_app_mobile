@@ -1,5 +1,3 @@
-// home_view.dart
-
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/features/home/widgets/index.dart';
 import 'package:studio_accordo_app_mobile/features/home/store/home_store.dart';

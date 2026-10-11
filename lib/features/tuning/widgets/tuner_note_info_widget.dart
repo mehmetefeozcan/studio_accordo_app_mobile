@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
-/// Algılanan nota, oktavı ve ölçülen frekans. Ekrandaki tek büyük okuma.
 class TunerNoteInfoWidget extends StatelessWidget {
   final TuningStore store;
 

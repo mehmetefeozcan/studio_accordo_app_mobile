@@ -3,10 +3,6 @@ import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-/// Daire zeminli ikon butonu — referans frekansı ve metronom BPM'inin
-/// `−` / `+` adımları.
-///
-/// İkon bir SVG asset yolu (`AppAssets.icons.*`) olarak verilir.
 class IconCircleButton extends StatelessWidget {
   final String icon;
   final VoidCallback? onPressed;

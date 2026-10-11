@@ -1,5 +1,3 @@
-// tuning_view.dart
-
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/core/routing/routes/main/main_routes.dart';
 import 'package:studio_accordo_app_mobile/features/tuning/widgets/index.dart';
@@ -49,7 +47,10 @@ class _TuningViewState extends State<TuningView>
         title: context.l10n.tuning,
         centerTitle: false,
         backRoute: MainRoutes.home,
-        actions: [FrequencySelectWidget(store: store), SizedBox(width: 16.w)],
+        actions: [
+          FrequencySelectWidget(store: store),
+          SizedBox(width: 16.w),
+        ],
       ),
       body: SafeArea(
         minimum: context.screenPadding,

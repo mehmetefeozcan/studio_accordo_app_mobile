@@ -8,18 +8,12 @@ import 'dart:async';
 mixin BaseViewMixin<T extends StatefulWidget> on State<T> {
   final List<ReactionDisposer> _disposers = [];
 
-  /// Override in page
   Future<void> onInit() async {}
 
-  /// Override in page
   void onDispose() {}
 
   void addReaction(ReactionDisposer disposer) {
     _disposers.add(disposer);
-  }
-
-  void addReactions(List<ReactionDisposer> disposers) {
-    _disposers.addAll(disposers);
   }
 
   BaseStore? get store => null;

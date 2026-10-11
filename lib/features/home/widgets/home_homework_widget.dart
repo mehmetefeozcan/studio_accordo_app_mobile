@@ -6,7 +6,6 @@ import 'package:studio_accordo_app_mobile/core/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
-/// Üzerinde çalışılan ödev kartı: eser, ölçü aralığı, tempo ve teslim günü.
 class HomeHomeworkWidget extends StatelessWidget {
   final HomeworkItem item;
 

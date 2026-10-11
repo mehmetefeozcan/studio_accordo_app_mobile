@@ -1,5 +1,3 @@
-// splash_store.dart
-
 import 'package:studio_accordo_app_mobile/core/base/base_store.dart';
 
 import 'package:injectable/injectable.dart';

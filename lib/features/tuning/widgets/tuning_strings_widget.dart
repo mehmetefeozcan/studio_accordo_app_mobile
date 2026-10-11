@@ -5,7 +5,6 @@ import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
-/// Seçili akort düzeninin telleri — kalından inceye, dokununca seçilir.
 class TuningStringsWidget extends StatelessWidget {
   final TuningStore store;
 
@@ -46,7 +45,6 @@ class TuningStringsWidget extends StatelessWidget {
     final inTune = store.tunedStrings.contains(index);
     final green = context.ds.signalTrue;
 
-    // Akortta: success zemini; üstündeki metin `onTertiary` (AA doğrulanmış çift).
     final onGreen = context.ds.onSignalTrue;
 
     return GestureDetector(
@@ -64,8 +62,6 @@ class TuningStringsWidget extends StatelessWidget {
               ? context.ds.actionBg
               : context.ds.bgRaised,
           borderRadius: BorderRadius.circular(context.radiusSm),
-          // Çalınan (seçili) tel akortlandıysa da ayırt edilsin: yeşil zeminde
-          // birincil renk çerçeve.
           border: Border.all(
             width: selected ? 2 : 1,
             color: selected

@@ -3,11 +3,6 @@ import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:moment_dart/moment_dart.dart';
 import 'package:flutter/widgets.dart';
 
-/// Göreli tarih metni — "Bugün", "3 gün önce", "2 ay önce".
-///
-/// Gün farkı üzerinden çalışır, saat farkı üzerinden değil: dün 23:00 ile
-/// bugün 01:00 arası "Dün" der, "2 saat önce" demez. Pratik geçmişi gün
-/// bazında tutulduğu için doğru olan bu.
 extension RelativeDate on DateTime {
   String relative(BuildContext context) {
     final l10n = context.l10n;

@@ -7,7 +7,6 @@ import 'package:moment_dart/moment_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-/// Tarih, günün selamı ve ayarlar.
 class HomeAppbarWidget extends StatelessWidget {
   final GreetingKind greeting;
 

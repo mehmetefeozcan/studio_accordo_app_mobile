@@ -10,47 +10,25 @@ import 'dart:typed_data';
 import 'dart:isolate';
 import 'dart:async';
 
-/// Mikrofondan gelen sesi YIN ile perdeye çeviren gerçek algılayıcı.
-///
-/// Akış: `record` (PCM16, mono) → halka tampon → RMS kapısı → worker
-/// isolate'ta YIN → medyan filtre + kararlılık kapısı → [PitchReading].
-///
-/// Ham ses cihazdan çıkmaz ve saklanmaz; yalnızca perde ölçümü üretilir.
 @Injectable(as: PitchDetectorService)
 class MicrophonePitchDetectorService implements PitchDetectorService {
   static const _sampleRate = 44100;
 
-  /// 4096 örnek ≈ 93 ms. E2 (82 Hz) için periyot ≈ 540 örnek; YIN'in
-  /// en az iki periyot görmesi gerekir, daha kısa pencere alt telleri bozar.
   static const _window = 4096;
 
-  /// Arama aralığı tüm akort düzenlerini ve A4 = 400–480 Hz ayarını kapsar:
-  /// en pes tel D2 (A4 = 400'de ≈ 66.8 Hz) − 4 yarım ses ≈ 53 Hz; en tiz
-  /// tel F4 (A4 = 480'de ≈ 381 Hz) + 4 yarım ses ≈ 480 Hz. Alt sınırın en
-  /// pes telin bir oktav altına inmemesi E2'de oktav hatasını önler.
   static const _searchMinHz = 52.0;
   static const _searchMaxHz = 500.0;
 
-  /// Bunun altındaki çerçeve "ses yok" sayılır.
   static const _silenceRms = 0.01;
 
-  /// YIN güveni (1 − d') bunun altındaysa çerçeve geçersizdir.
   static const _minConfidence = 0.6;
 
-  /// Medyan filtrenin uzunluğu.
   static const _medianLength = 5;
 
-  /// Ölçümün gösterilmesi için gereken ardışık tutarlı çerçeve sayısı.
-  /// Tel ilk çalındığında atak gürültüsünü ve ilk ~100 ms'lik kararsız
-  /// bölgeyi eler.
   static const _stableFrames = 3;
 
-  /// Yeni ölçümün mevcut medyandan bu kadar sentten fazla sapması yeni bir
-  /// notanın başladığı anlamına gelir; geçmiş sıfırlanır.
   static const _newNoteCents = 80.0;
 
-  /// Perde bulunamayan sürenin bu kadar uzaması ekranı temizler. Kısa
-  /// kopmalarda ibre titremesin diye.
   static const _releaseAfter = Duration(milliseconds: 400);
 
   final _controller = StreamController<PitchReading?>.broadcast();
@@ -79,8 +57,6 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
 
   @override
   Future<void> start({required double referenceHz}) async {
-    // Referans değişimi (FrequencySelect) mikrofonu yeniden açmaz; yalnızca
-    // sonraki ölçümlerin hedef ızgarası kayar.
     _referenceHz = referenceHz;
     if (_running || _starting) return;
 
@@ -100,7 +76,6 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
         ),
       );
 
-      // Başlarken sayfa kapandıysa (stop/dispose geldiyse) mikrofon açık kalmaz.
       if (_cancelled) {
         await _recorder.stop();
         _stopWorker();
@@ -136,11 +111,7 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
     await _controller.close();
   }
 
-  // ── Ses girişi ────────────────────────────────────────────────────────
-
   void _onAudio(Uint8List chunk) {
-    // PCM16 little-endian. Parça sınırında kalan tek bayt bir sonrakine
-    // taşınır; `Int16List.view` hizalama şartı yüzünden kullanılmıyor.
     var bytes = chunk;
     final carry = _carryByte;
 
@@ -159,7 +130,6 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
     _analyzeLatestWindow();
   }
 
-  /// Yeni örnekleri halka tamponun sonuna ekler, eskileri öne kaydırır.
   void _push(ByteData data, int sampleCount) {
     final keep = sampleCount >= _window ? _window : sampleCount;
     final first = sampleCount - keep;
@@ -175,8 +145,6 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
   }
 
   void _analyzeLatestWindow() {
-    // Worker meşgulse çerçeve atlanır; bir sonraki parça en güncel pencereyi
-    // alır. Gecikme birikmez.
     if (_filled < _window || _busy || _toWorker == null) return;
 
     if (PitchMath.rms(_ring) < _silenceRms) {
@@ -189,8 +157,6 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
       TransferableTypedData.fromList([Float64List.fromList(_ring)]),
     );
   }
-
-  // ── Worker isolate ────────────────────────────────────────────────────
 
   Future<void> _startWorker() async {
     _workerReady = Completer<void>();
@@ -230,8 +196,6 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
     _onFrame(hz < 0 ? null : hz, result[1] as double);
   }
 
-  // ── Yumuşatma ─────────────────────────────────────────────────────────
-
   void _onFrame(double? hz, double confidence) {
     if (hz == null || confidence < _minConfidence) {
       if (_sinceVoiced.elapsed >= _releaseAfter) {
@@ -264,7 +228,6 @@ class MicrophonePitchDetectorService implements PitchDetectorService {
   }
 
   void _emit(PitchReading? reading) {
-    // Sessizlikte null yalnızca bir kez gider; UI "—" durumuna geçer.
     if (reading == null && _lastEmittedNull) return;
 
     _lastEmittedNull = reading == null;
@@ -290,8 +253,6 @@ class _WorkerInit {
   const _WorkerInit(this.replyTo, this.sampleRate);
 }
 
-/// YIN'i UI isolate'ının dışında koşturur. Her çerçeve için
-/// `[frekans (yoksa -1), güven]` döner.
 void _workerMain(_WorkerInit init) {
   final commands = ReceivePort();
   init.replyTo.send(commands.sendPort);

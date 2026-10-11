@@ -2,11 +2,9 @@ import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension
 import 'package:flutter/material.dart';
 
 class LinearIndicator extends StatelessWidget {
-  /// Verilmezse `ds.actionBg` / `ds.lineSeparator`.
   final Color? activeColor;
   final Color? passiveColor;
 
-  /// [0-100] range acceptable
   final double progress;
 
   const new({

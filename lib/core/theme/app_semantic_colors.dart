@@ -2,17 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
-/// Material `ColorScheme`'inde karşılığı olmayan Studio Accordo tokenları
-/// (**v4 · Karışım**).
-///
-/// Başlıca ek yuvalar: marka kırmızısı, durum renkleri + kapları (success /
-/// warning / error), nota kâğıdı (`sheet`, `scoreHighlight`), kontrol
-/// başparmağı, basılı katman ve grafik serileri.
-///
-/// ```dart
-/// Container(color: context.ds.sheet)
-/// Text('−12', style: context.readout.copyWith(color: context.ds.signalOff))
-/// ```
 @immutable
 class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
   const AppSemanticColors({
@@ -57,124 +46,50 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
     required this.shadowOverlay,
   });
 
-  /// Marka kırmızısı — tek vurgu. Sekme çizgisi, 1. vuruş, akort ibresi, kalem halkası. **Metin değil** (3:1 UI).
   final Color brandRed;
-
-  /// Ekran zemini (bg.base).
   final Color bgBase;
-
-  /// Kart, grup, liste satırı, tab bar (bg.raised).
   final Color bgRaised;
-
-  /// Girdi, çukur alan, segmented ray, pasif dolgu (bg.sunken).
   final Color bgSunken;
-
-  /// Birincil metin ve ikon (text.primary).
   final Color textPrimary;
-
-  /// İkincil metin (text.secondary).
   final Color textSecondary;
-
-  /// Birincil eylem dolgusu — mürekkep (action.bg).
   final Color actionBg;
-
-  /// Birincil eylem üstündeki metin / ikon (action.fg).
   final Color actionFg;
-
-  /// Hafif ayraç / kart kenarı (line.separator).
   final Color lineSeparator;
-
-  /// Kontrol çizgisi: girdi, segmented, yuvarlak buton (line.control, 3:1).
   final Color lineControl;
-
-  /// `signalTrue` dolgusu üstündeki metin.
   final Color onSignalTrue;
-
-  /// Alt sayfa ve egzersiz ekranındaki nota kâğıdı (sheet); tema ile döner. Üstünde `onSurface` mürekkebi ve `scoreHighlight` kullanılır.
   final Color sheet;
-
-  /// Aktif ölçü / seçili satır zemini. Üstündeki nota rengi değişmez (AA doğrulandı).
   final Color scoreHighlight;
-
-  /// Segmented control seçili parça ve anahtar başparmağı.
   final Color controlThumb;
-
-  /// Basılı satır / buton katmanı.
   final Color pressedOverlay;
-
-  /// Her iki temada açık kâğıt (SVG varlıkları için). Tema ile dönen nota sayfası için [sheet].
   final Color paper;
-
-  /// Açık kâğıt üzerindeki gravür işaretleri.
   final Color paperInk;
-
-  /// Açık kâğıt üzerindeki porte / ölçü çizgileri.
   final Color paperLine;
-
-  /// Açık kâğıt üzerindeki parmak ve ölçü numaraları.
   final Color paperMuted;
-
-  /// Açık kâğıt üzerindeki aktif ölçü zemini.
   final Color paperAccent;
-
-  /// Kâğıt üzerindeki odak halkası.
   final Color focusRingPaper;
-
-  /// Klavye odağı: 2px, 2px offset.
   final Color focusRing;
-
-  /// Üçüncü seviye metin / pasif ikon (3:1). Gövde metni için değil.
   final Color inkSubtle;
-
-  /// Metin butonu ve seçili etiket rengi — v4'te mürekkep.
   final Color accentText;
-
-  /// Seçili satır / ipucu kutusu zemini (= scoreHighlight).
   final Color accentWash;
-
-  /// Hafif kenarlık, çalmamış vuruş çizgisi (= line.separator).
   final Color accentDim;
-
-  /// state.success — akortta, doğru, tamamlandı.
   final Color signalTrue;
-
-  /// Başarı bandı zemini.
   final Color successContainer;
-
-  /// state.warning — mikrofon izni yok, gürültülü ortam.
   final Color signalWarn;
-
-  /// Uyarı bandı zemini.
   final Color warningContainer;
-
-  /// state.error — pes/tiz, yanlış, hata. Renk doğruluğu söyler, yönü söylemez; yanında kelime / işaretli sayı bulunur.
   final Color signalOff;
-
-  /// Hata bandı zemini.
   final Color errorContainer;
-
-  /// Grafik serisi 1 (sabit sıra).
   final Color dataPractice;
-
-  /// Grafik serisi 2.
   final Color dataTempo;
-
-  /// Grafik serisi 3.
   final Color dataAccuracy;
-
-  /// Grafik serisi 4.
   final Color dataSessions;
-
-  /// Yalnızca ızgara çizgileri.
   final Color dataGrid;
-
-  /// Kategorik seri sırası — **sabit, döngüye sokulmaz.**
-  List<Color> get dataSeries => [dataPractice, dataTempo, dataAccuracy, dataSessions];
-
-  /// Zeminden ayrılması gereken kartlar için tek katman, 2px'i geçmez.
+  List<Color> get dataSeries => [
+    dataPractice,
+    dataTempo,
+    dataAccuracy,
+    dataSessions,
+  ];
   final List<BoxShadow> shadowRaised;
-
-  /// Menü, popover, alt sayfa — yüzen katmanlar.
   final List<BoxShadow> shadowOverlay;
 
   static const dark = AppSemanticColors(
@@ -401,9 +316,17 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       accentWash: Color.lerp(accentWash, other.accentWash, t)!,
       accentDim: Color.lerp(accentDim, other.accentDim, t)!,
       signalTrue: Color.lerp(signalTrue, other.signalTrue, t)!,
-      successContainer: Color.lerp(successContainer, other.successContainer, t)!,
+      successContainer: Color.lerp(
+        successContainer,
+        other.successContainer,
+        t,
+      )!,
       signalWarn: Color.lerp(signalWarn, other.signalWarn, t)!,
-      warningContainer: Color.lerp(warningContainer, other.warningContainer, t)!,
+      warningContainer: Color.lerp(
+        warningContainer,
+        other.warningContainer,
+        t,
+      )!,
       signalOff: Color.lerp(signalOff, other.signalOff, t)!,
       errorContainer: Color.lerp(errorContainer, other.errorContainer, t)!,
       dataPractice: Color.lerp(dataPractice, other.dataPractice, t)!,
@@ -411,8 +334,12 @@ class AppSemanticColors extends ThemeExtension<AppSemanticColors> {
       dataAccuracy: Color.lerp(dataAccuracy, other.dataAccuracy, t)!,
       dataSessions: Color.lerp(dataSessions, other.dataSessions, t)!,
       dataGrid: Color.lerp(dataGrid, other.dataGrid, t)!,
-      shadowRaised: BoxShadow.lerpList(shadowRaised, other.shadowRaised, t) ?? shadowRaised,
-      shadowOverlay: BoxShadow.lerpList(shadowOverlay, other.shadowOverlay, t) ?? shadowOverlay,
+      shadowRaised:
+          BoxShadow.lerpList(shadowRaised, other.shadowRaised, t) ??
+          shadowRaised,
+      shadowOverlay:
+          BoxShadow.lerpList(shadowOverlay, other.shadowOverlay, t) ??
+          shadowOverlay,
     );
   }
 }

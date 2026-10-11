@@ -1,12 +1,9 @@
 import 'dart:typed_data';
 import 'dart:math';
 
-/// YIN'in tek bir çerçeve için sonucu.
 class YinResult {
-  /// `null` ise çerçevede periyodik bir perde bulunamadı.
   final double? frequency;
 
-  /// 0..1 arası: `1 - d'(tau)`. Yüksek değer periyodik, güvenilir ölçümdür.
   final double confidence;
 
   const YinResult(this.frequency, this.confidence);
@@ -14,30 +11,15 @@ class YinResult {
   static const unvoiced = YinResult(null, 0);
 }
 
-/// de Cheveigné & Kawahara (2002) YIN algoritması.
-///
-/// Adımlar: fark fonksiyonu → kümülatif ortalama normalize fark (CMND) →
-/// mutlak eşik → parabolik interpolasyon. Saf Dart; platform veya paket
-/// bağımlılığı yok, bu yüzden isolate içinde ve testte aynen çalışır.
-///
-/// Arama aralığı [minFrequency]..[maxFrequency] ile sınırlıdır. Alt tellerde
-/// oktav hatasını (E2'yi E3 sanma) engelleyen asıl şey budur: [minFrequency]
-/// en pes hedef telin bir oktav altına asla inmemelidir.
 class YinDetector {
   final int sampleRate;
   final double minFrequency;
   final double maxFrequency;
 
-  /// Mutlak eşik. Düşük değer daha seçicidir (oktav hatasına karşı güvenli,
-  /// zayıf seslerde "bulunamadı" çıkabilir). Tipik: 0.10–0.20.
   final double threshold;
 
-  /// Eşiği geçen vadi yoksa aralıktaki global minimum bu değerin altındaysa
-  /// kabul edilir.
   final double fallbackThreshold;
 
-  /// Fark fonksiyonunda toplanan örnek sayısı. Büyük değer daha kararlı ama
-  /// maliyet ≈ pencere × tauMax.
   final int maxIntegrationWindow;
 
   YinDetector({
@@ -53,7 +35,6 @@ class YinDetector {
   late final int _tauMax = (sampleRate / minFrequency).ceil();
   late final Float64List _cmnd = Float64List(_tauMax + 2);
 
-  /// Bir çerçevenin sahip olması gereken asgari uzunluk.
   int get minFrameLength => 2 * _tauMax + 2;
 
   YinResult detect(Float64List x) {
@@ -67,8 +48,6 @@ class YinDetector {
       );
     }
 
-    // 1-2) Fark fonksiyonu + kümülatif ortalama normalizasyonu. Parabolik
-    //      interpolasyon komşu değere baktığı için tauMax + 1'e kadar gider.
     final cmnd = _cmnd;
     cmnd[0] = 1.0;
     var running = 0.0;
@@ -83,7 +62,6 @@ class YinDetector {
       cmnd[lag] = running == 0 ? 1.0 : sum * lag / running;
     }
 
-    // 3) Mutlak eşik: eşiğin altına inen ilk vadiyi bul, dibine kadar in.
     var tauEstimate = -1;
     var tau = _tauMin;
 
@@ -98,7 +76,6 @@ class YinDetector {
       tau++;
     }
 
-    // Eşiği geçen yoksa aralıktaki global minimuma bak.
     if (tauEstimate == -1) {
       var best = _tauMin;
       for (var t = _tauMin + 1; t <= _tauMax; t++) {
@@ -108,7 +85,6 @@ class YinDetector {
       tauEstimate = best;
     }
 
-    // 4) Parabolik interpolasyon: örnek altı hassasiyet (sent doğruluğu için şart).
     final a = cmnd[tauEstimate - 1];
     final b = cmnd[tauEstimate];
     final c = cmnd[tauEstimate + 1];

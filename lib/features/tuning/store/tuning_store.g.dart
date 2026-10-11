@@ -23,6 +23,7 @@ mixin _$TuningStore on _TuningStore, Store {
     () => super.isInTune,
     name: '_TuningStore.isInTune',
   )).value;
+
   late final _$selectedTuningAtom = Atom(
     name: '_TuningStore.selectedTuning',
     context: context,

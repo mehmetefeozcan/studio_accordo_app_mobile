@@ -1,7 +1,3 @@
-/// Mikrofondan gelen tek bir perde ölçümü.
-///
-/// [cents] işaretlidir: negatif pes, pozitif tiz. Renk ve yön kararları
-/// buradan türetilir, ölçümün kendisi hiçbir yerde yuvarlanmadan saklanır.
 class PitchReading {
   final String note;
   final int octave;

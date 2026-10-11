@@ -1,5 +1,3 @@
-// home_store.dart
-
 import 'package:studio_accordo_app_mobile/features/home/model/weekly_progress.dart';
 import 'package:studio_accordo_app_mobile/features/home/model/practice_entry.dart';
 import 'package:studio_accordo_app_mobile/features/home/model/homework_item.dart';
@@ -26,13 +24,10 @@ abstract class _HomeStore extends BaseStore with Store {
   @observable
   PracticeEntry? lastPracticed;
 
-  /// Observable değil: saate bakar, build sırasında okunur.
   GreetingKind get greeting => GreetingKind.fromHour(DateTime.now().hour);
 
   @action
   Future<void> initApp() async {
-    // TODO: API bağlandığında bu blok istek sonucuyla değişecek; ekranda
-    // sabit veri kalmaması için şimdilik tek yerde toplanıyor.
     weeklyProgress = const WeeklyProgress(
       minutes: 252,
       goalMinutes: 300,

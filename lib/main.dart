@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 Future<void> main() async {
-  // System Configuration
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge);
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
@@ -23,10 +22,8 @@ Future<void> main() async {
       systemStatusBarContrastEnforced: false,
     ),
   );
-  // DI Configuration
   await HiveInitializer.init();
   await configureDependencies();
-  // Initialize Theme & Language
   await getIt<ThemeStore>().loadTheme();
   await getIt<LanguageStore>().loadLanguage();
 

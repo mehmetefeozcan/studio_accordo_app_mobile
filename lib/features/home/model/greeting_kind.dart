@@ -2,7 +2,6 @@ import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 
 import 'package:flutter/widgets.dart';
 
-/// Günün selamı. Sınırlar sabah 5, öğlen 12, akşam 18.
 enum GreetingKind {
   morning,
   afternoon,

@@ -79,7 +79,6 @@ class GeneralBottomNavbar extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         spacing: 2.h,
         children: [
-          // Seçili sekme: 2px marka kırmızısı çizgi.
           Container(
             width: 24.w,
             height: 2,

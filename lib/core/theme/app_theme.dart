@@ -36,11 +36,9 @@ class AppTheme {
       colorScheme: scheme,
       textTheme: text,
 
-      // Ekran zemini surface100; kart ve panel surface200 (scheme.surface).
       scaffoldBackgroundColor: scaffold,
       canvasColor: scaffold,
 
-      // Kâğıt yüzeyi, sinyal renkleri ve grafik serileri burada taşınır.
       extensions: <ThemeExtension<dynamic>>[semantic],
 
       appBarTheme: AppBarTheme(
@@ -50,12 +48,9 @@ class AppTheme {
         foregroundColor: scheme.onSurface,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: AppTextStyles.title2.copyWith(
-          color: scheme.onSurface,
-        ),
+        titleTextStyle: AppTextStyles.title2.copyWith(color: scheme.onSurface),
       ),
 
-      // Derinliği yüzey basamağı anlatır, gölge değil.
       cardTheme: CardThemeData(
         color: scheme.surface,
         surfaceTintColor: Colors.transparent,
@@ -72,7 +67,6 @@ class AppTheme {
         space: 1,
       ),
 
-      // Birincil eylem: mürekkep dolgu (action.bg), krem yazı. Ekranda tek tane olur.
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
           backgroundColor: scheme.primary,
@@ -88,7 +82,6 @@ class AppTheme {
         ),
       ),
 
-      // İkincil eylem: saydam, kontrol sınırı belli.
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
           foregroundColor: scheme.onSurface,
@@ -102,7 +95,6 @@ class AppTheme {
         ),
       ),
 
-      // Sade eylem: liste içi, kart başlığı yanı, "tümünü gör".
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
           foregroundColor: semantic.accentText,
@@ -156,7 +148,7 @@ class AppTheme {
       navigationBarTheme: NavigationBarThemeData(
         backgroundColor: scheme.surface,
         surfaceTintColor: Colors.transparent,
-        indicatorColor: Colors.transparent, // seçili durumu 2px kırmızı çizgi taşır
+        indicatorColor: Colors.transparent,
         elevation: 0,
         labelTextStyle: WidgetStatePropertyAll(AppTextStyles.label),
       ),
@@ -189,9 +181,6 @@ class AppTheme {
 
       highlightColor: semantic.pressedOverlay,
 
-      // Hareket bu üründe bir yerde iş yapar: metronom vuruşu ve akort
-      // ibresi. Geri kalanı 120–180ms yer değiştirir; giriş animasyonu,
-      // parıltı, kutlama yok.
       splashFactory: InkSparkle.splashFactory,
     );
   }

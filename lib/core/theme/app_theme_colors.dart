@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 
-/// v4 · Karışım — `ColorScheme` eşlemesi.
-///
-/// `primary` = **mürekkep** (action.bg), marka kırmızısı değil. Kırmızı
-/// `AppSemanticColors.brandRed` / `ColorScheme.inversePrimary`'de durur ve
-/// yalnızca küçük UI işaretlerinde kullanılır.
 class AppThemeColors {
   const AppThemeColors._();
 

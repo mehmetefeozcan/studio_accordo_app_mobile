@@ -11,8 +11,6 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-/// Referans frekansı alt sayfası: `−` / `+` ile serbest ayar, altında sık
-/// kullanılan değerler.
 class FrequencySelectSheet extends StatelessWidget {
   final TuningStore store;
 
@@ -142,9 +140,7 @@ class FrequencySelectSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             spacing: context.space2,
             children: ReferenceFrequency.presets
-                .map(
-                  (preset) => Expanded(child: buildPreset(context, preset)),
-                )
+                .map((preset) => Expanded(child: buildPreset(context, preset)))
                 .toList(),
           ),
         ),
@@ -161,9 +157,7 @@ class FrequencySelectSheet extends StatelessWidget {
         width: context.width,
         padding: EdgeInsets.symmetric(vertical: context.space3),
         decoration: BoxDecoration(
-          color: selected
-              ? context.ds.actionBg
-              : context.ds.bgSunken,
+          color: selected ? context.ds.actionBg : context.ds.bgSunken,
           borderRadius: BorderRadius.circular(context.radiusPill),
           border: Border.all(width: 1, color: context.ds.lineSeparator),
         ),
@@ -171,9 +165,7 @@ class FrequencySelectSheet extends StatelessWidget {
           child: Text(
             preset.toStringAsFixed(0),
             style: context.numericS.copyWith(
-              color: selected
-                  ? context.ds.actionFg
-                  : context.ds.inkSubtle,
+              color: selected ? context.ds.actionFg : context.ds.inkSubtle,
               fontWeight: FontWeight.w600,
             ),
           ),

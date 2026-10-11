@@ -7,7 +7,6 @@ import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
-/// En son çalışılan parça — kullanıcının kaldığı yere dönüş satırı.
 class HomeLastPracticedWidget extends StatelessWidget {
   final PracticeEntry entry;
 

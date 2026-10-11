@@ -8,10 +8,6 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-/// Sapmanın sent cinsinden okuması: işaret, değer ve yön kelimesi.
-///
-/// Renk yalnızca doğruluğu söyler; yönü işaret ikonu ile yanındaki kelime
-/// taşır (bkz. `AppSemanticColors.signalOff`).
 class TunerCentsWidget extends StatelessWidget {
   final TuningStore store;
 

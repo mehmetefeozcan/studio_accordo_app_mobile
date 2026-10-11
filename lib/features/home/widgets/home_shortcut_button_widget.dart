@@ -5,8 +5,6 @@ import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-/// Tek kısayol kutusu. Genişliği kullanan taraf belirler — satır içinde
-/// `Expanded` ile sarılır (bkz. `HomeShortcutsWidget`).
 class HomeShortcutButtonWidget extends StatelessWidget {
   final ShortCutParams params;
 

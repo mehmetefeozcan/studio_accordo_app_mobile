@@ -6,7 +6,6 @@ import 'package:studio_accordo_app_mobile/core/utils/show_bottom_sheet.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
-/// Appbar'daki referans frekansı rozeti — dokununca ayar sayfasını açar.
 class FrequencySelectWidget extends StatelessWidget {
   final TuningStore store;
 

@@ -3,22 +3,13 @@ import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
-/// Akort cetveli: ortada tolerans bandı, kenarlarda ±50 sentlik uç çizgiler
-/// ve sapmayı gösteren ibre.
-///
-/// Skala ±[scaleCents] ile sınırlı; bunun dışındaki sapmalarda ibre uçta
-/// durur, cetvelden taşmaz.
 class TunerReadoutWidget extends StatelessWidget {
-  /// İşaretli sapma — negatif pes, pozitif tiz. Ölçüm yoksa `null`,
-  /// ibre merkezde kalır.
   final double? cents;
 
-  /// Toleransın içinde miyiz — ibrenin rengini bu belirler.
   final bool inTune;
 
   const new({super.key, required this.cents, required this.inTune});
 
-  /// Cetvelin bir ucunun karşılığı.
   static const scaleCents = 50.0;
 
   @override
@@ -103,12 +94,9 @@ class TunerReadoutWidget extends StatelessWidget {
   Widget buildNeedle(BuildContext context, double width) {
     final needleWidth = 4.w;
 
-    // Merkezden sapma: skalanın yarısı cetvelin yarısına karşılık gelir.
     final travel = (width - needleWidth) / 2;
     final ratio = ((cents ?? 0) / scaleCents).clamp(-1.0, 1.0);
 
-    // Ölçümler eşit aralıklı gelmez (algılayıcı meşgulse çerçeve atlanır);
-    // ibre her yeni değerde zıplamasın diye konuma yumuşakça gider.
     return TweenAnimationBuilder<double>(
       tween: Tween<double>(end: ratio * travel),
       duration: const Duration(milliseconds: 120),

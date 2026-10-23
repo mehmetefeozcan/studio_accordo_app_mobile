@@ -1,80 +1,50 @@
-import 'package:studio_accordo_app_mobile/core/widgets/buttons/custom_elevated_button.dart';
+import 'package:studio_accordo_app_mobile/core/widgets/buttons/index.dart';
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/core/routing/routes/main/main_routes.dart';
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
-import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
 
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
+/// The status is a gloss line, not a pill. `tempo` is not used here: this
+/// screen has no tempo.
 class UnderConstructionView extends StatelessWidget {
   final String title;
+
   const UnderConstructionView({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        minimum: context.screenPadding,
-        child: Center(
+        child: Padding(
+          padding: context.screenPadding.copyWith(
+            top: context.frameTop,
+            bottom: context.frameBottom,
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Spacer(),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.space4,
-                  vertical: context.space2,
-                ),
-                decoration: BoxDecoration(
-                  color: context.ds.paper,
-                  borderRadius: BorderRadius.circular(context.radiusLg),
-                ),
-                child: SvgPicture.asset(AppAssets.icons.wipMusicStaff),
+              const Spacer(),
+              SizedBox(
+                width: context.measureOf(AppPass.one),
+                child: Text(title, style: context.pass(AppPass.one)),
               ),
-              SizedBox(height: context.space7),
-              Text(title, style: context.displayLarge),
-              SizedBox(height: context.space3),
-              buildStatusPill(context),
-              Spacer(),
+              SizedBox(height: context.gapAfter(AppPass.two)),
+              Text(
+                context.l10n.disabledInThisVersion,
+                style: context
+                    .gloss(AppPass.two)
+                    .copyWith(color: context.ds.gloss),
+              ),
+              const Spacer(),
               CustomElevatedButton(
-                onPressed: () {
-                  context.go(MainRoutes.home);
-                },
+                onPressed: () => context.go(MainRoutes.home),
                 expand: true,
-                child: Text(
-                  context.l10n.backToToday,
-                  style: context.bodyMedium!.copyWith(
-                    color: context.ds.actionFg,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                child: Text(context.l10n.backToToday),
               ),
-              SizedBox(height: context.space3),
             ],
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildStatusPill(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: context.space1,
-        horizontal: context.space2,
-      ),
-      decoration: BoxDecoration(
-        color: context.ds.accentWash,
-        borderRadius: BorderRadius.circular(context.radiusPill),
-        border: Border.all(width: 1, color: context.ds.accentDim),
-      ),
-      child: Text(
-        context.l10n.disabledInThisVersion,
-        style: context.titleSmall!.copyWith(
-          color: context.ds.accentText,
-          fontWeight: FontWeight.w600,
         ),
       ),
     );

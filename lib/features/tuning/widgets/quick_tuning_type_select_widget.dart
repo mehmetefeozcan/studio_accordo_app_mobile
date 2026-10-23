@@ -5,18 +5,21 @@ import 'package:studio_accordo_app_mobile/features/tuning/model/tuning_type.dart
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
+/// Tuning presets at pass 4. No pills — the selected preset takes the passage
+/// ink at pass weight, the rest stay in the gloss voice.
 class QuickTuningTypeSelectWidget extends StatelessWidget {
   final TuningStore store;
 
-  const new({super.key, required this.store});
+  const QuickTuningTypeSelectWidget({super.key, required this.store});
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.only(right: context.indent),
       child: Observer(
         builder: (context) => Row(
-          spacing: context.space2,
+          spacing: context.gapClose,
           children: TuningType.values
               .map((type) => buildTuningType(context, type))
               .toList(),
@@ -28,23 +31,24 @@ class QuickTuningTypeSelectWidget extends StatelessWidget {
   Widget buildTuningType(BuildContext context, TuningType type) {
     final selected = type == store.selectedTuning;
 
-    return GestureDetector(
-      onTap: () => store.selectTuning(type),
-      child: Container(
-        padding: EdgeInsets.symmetric(
-          vertical: context.space2,
-          horizontal: context.space6,
-        ),
-        decoration: BoxDecoration(
-          color: selected ? context.ds.actionBg : context.ds.bgRaised,
-          borderRadius: BorderRadius.circular(context.radiusPill),
-          border: Border.all(width: 1, color: context.ds.lineSeparator),
-        ),
-        child: Text(
-          type.label(context),
-          style: context.numericS.copyWith(
-            color: selected ? context.ds.actionFg : context.ds.textSecondary,
-            fontWeight: FontWeight.w600,
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: InkWell(
+        onTap: () => store.selectTuning(type),
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(minHeight: 44),
+          child: Center(
+            child: Text(
+              type.label(context),
+              style: selected
+                  ? context
+                        .pass(AppPass.four)
+                        .copyWith(color: context.ds.passage)
+                  : context
+                        .gloss(AppPass.four)
+                        .copyWith(color: context.ds.gloss),
+            ),
           ),
         ),
       ),

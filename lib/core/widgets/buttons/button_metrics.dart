@@ -4,6 +4,8 @@ import '../../theme/text_theme.dart';
 
 enum AppButtonSize { sm, md, lg }
 
+/// Labels sit on the pass scale. Buttons carry no radius: see
+/// design/CONSTITUTION.md §6.
 extension AppButtonMetrics on AppButtonSize {
   double get minHeight => switch (this) {
     AppButtonSize.sm => 44,
@@ -12,18 +14,16 @@ extension AppButtonMetrics on AppButtonSize {
   };
 
   EdgeInsets get padding => switch (this) {
-    AppButtonSize.sm => const EdgeInsets.symmetric(horizontal: 12),
-    AppButtonSize.md => const EdgeInsets.symmetric(horizontal: 16),
-    AppButtonSize.lg => const EdgeInsets.symmetric(horizontal: 24),
+    AppButtonSize.sm => const EdgeInsets.symmetric(horizontal: 14),
+    AppButtonSize.md => const EdgeInsets.symmetric(horizontal: 18),
+    AppButtonSize.lg => const EdgeInsets.symmetric(horizontal: 26),
   };
 
   TextStyle get textStyle => switch (this) {
-    AppButtonSize.sm => AppTextStyles.caption.copyWith(
-      fontWeight: FontWeight.w600,
-    ),
-    AppButtonSize.md => AppTextStyles.bodyStrong,
-    AppButtonSize.lg => AppTextStyles.bodyStrong.copyWith(fontSize: 17),
+    AppButtonSize.sm => AppTextStyles.gloss(AppPass.four),
+    AppButtonSize.md => AppTextStyles.pass(AppPass.four),
+    AppButtonSize.lg => AppTextStyles.pass(AppPass.three),
   };
 }
 
-enum AppButtonTone { normal, danger }
+enum AppButtonTone { normal, quiet }

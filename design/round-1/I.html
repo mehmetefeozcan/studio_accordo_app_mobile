@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>I</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=bespoke-slab@300,400,500,700,800&f[]=sentient@300,400,400i,300i,500i&display=swap">
+<style>
+  :root{
+    --ground:#FCFAF4;
+    --ink:#1B1A17;
+    --grey:#6A675F;
+    --vermilion:#B52A1B;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--ground)}
+  body{
+    font-family:'Bespoke Slab',Georgia,serif;
+    color:var(--ink);
+    min-height:100vh;
+    padding:50px 34px 110px;
+  }
+  .engraved{
+    font-weight:700;
+    text-transform:uppercase;
+    font-size:40px;
+    line-height:1.46;
+    letter-spacing:.012em;
+    font-variant-numeric:tabular-nums;
+    max-width:24ch;
+  }
+  .gloss{
+    font-family:'Sentient',Georgia,serif;
+    font-style:italic;
+    font-weight:400;
+    text-transform:none;
+    color:var(--vermilion);
+    font-size:21px;
+    letter-spacing:.004em;
+    white-space:nowrap;
+  }
+  .plate{
+    font-family:'Bespoke Slab',Georgia,serif;
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:14px;
+    letter-spacing:.2em;
+    color:var(--grey);
+    margin-bottom:54px;
+    display:block;
+  }
+  .margin{
+    font-family:'Sentient',Georgia,serif;
+    font-style:italic;
+    font-weight:300;
+    color:var(--grey);
+    font-size:18px;
+    line-height:1.7;
+    margin:30px 0 30px 0;
+    padding-left:2.4em;
+    text-indent:-1.2em;
+    max-width:40ch;
+  }
+  .margin .fix{color:var(--vermilion);font-weight:500}
+  .second{
+    font-weight:400;
+    text-transform:uppercase;
+    font-size:22px;
+    line-height:1.6;
+    letter-spacing:.05em;
+    color:var(--grey);
+    margin-top:44px;
+    font-variant-numeric:tabular-nums;
+    max-width:34ch;
+  }
+  .footplate{
+    font-family:'Sentient',Georgia,serif;
+    font-style:italic;
+    font-weight:300;
+    font-size:15px;
+    line-height:2;
+    color:var(--grey);
+    margin-top:62px;
+    max-width:46ch;
+  }
+</style>
+</head>
+<body>
+  <span class="plate">Studio Accordo</span>
+
+  <div class="engraved">
+    Ödevin <span class="gloss">Ölçü 12–28</span> hedef 96 BPM <span class="gloss">doğruluk %92</span> Akortta
+  </div>
+
+  <div class="margin">
+    Kaldığın yer — <span class="fix">Dün</span> · Notalar çözümleniyor · Günaydın
+  </div>
+
+  <div class="second">
+    Teller E A D G B E <span class="gloss">Referans frekansı</span> 440 Hz <span class="gloss">Kromatik</span> Pes Tiz −4 sent
+  </div>
+
+  <div class="margin">
+    Bu Hafta — <span class="fix">3 sa 40 dk</span>, hedef 5 sa, Geçen haftaya göre <span class="fix">+35 dk</span>
+  </div>
+
+  <div class="footplate">
+    Akort · Metronom · Nota tara · Kütüphane · İlerleme
+  </div>
+</body>
+</html>

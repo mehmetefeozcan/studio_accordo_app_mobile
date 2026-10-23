@@ -5,49 +5,48 @@ import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/widgets/buttons/index.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+/// The sheet sits on the sunken ground — the one case where a second ground
+/// value is permitted — and contracts from the heading down to the presets.
 class FrequencySelectSheet extends StatelessWidget {
   final TuningStore store;
 
-  const new({super.key, required this.store});
+  const FrequencySelectSheet({super.key, required this.store});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: context.width,
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.min,
         children: [
           buildHeader(context),
-          SizedBox(height: 28.h),
-          buildManuelConfig(context),
-          SizedBox(height: 20.h),
+          SizedBox(height: context.gapAfter(AppPass.two)),
+          buildManualConfig(context),
+          SizedBox(height: context.gapAfter(AppPass.two)),
           buildFrequentlyUsed(context),
-          SizedBox(height: 20.h),
-          Text(
-            context.l10n.frequentlyUsedDesc,
-            style: context.bodySmall!.copyWith(color: context.ds.inkSubtle),
-          ),
-          SizedBox(height: 20.h),
-          CustomElevatedButton(
-            onPressed: () {
-              context.pop();
-            },
-            expand: true,
+          SizedBox(height: context.gapClose),
+          SizedBox(
+            width: context.measureOf(AppPass.two),
             child: Text(
-              context.l10n.done,
-              style: context.bodyMedium!.copyWith(
-                color: context.ds.actionFg,
-                fontWeight: FontWeight.w600,
-              ),
+              context.l10n.frequentlyUsedDesc,
+              style: context
+                  .gloss(AppPass.four)
+                  .copyWith(color: context.ds.gloss),
             ),
           ),
-          SizedBox(height: 20.h),
+          SizedBox(height: context.gapOpen),
+          CustomElevatedButton(
+            onPressed: () => context.pop(),
+            expand: true,
+            child: Text(context.l10n.done),
+          ),
+          SizedBox(height: context.gapClose),
         ],
       ),
     );
@@ -55,18 +54,30 @@ class FrequencySelectSheet extends StatelessWidget {
 
   Widget buildHeader(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(context.l10n.referenceFrequency, style: context.displaySmall),
-        GestureDetector(
-          onTap: () {
-            context.pop();
-          },
-          child: SvgPicture.asset(
-            AppAssets.icons.close,
-            colorFilter: ColorFilter.mode(
-              context.ds.textSecondary,
-              BlendMode.srcIn,
+        Expanded(
+          child: Text(
+            context.l10n.referenceFrequency,
+            style: context.pass(AppPass.three),
+          ),
+        ),
+        Semantics(
+          button: true,
+          label: MaterialLocalizations.of(context).closeButtonLabel,
+          child: InkWell(
+            onTap: () => context.pop(),
+            child: Padding(
+              padding: EdgeInsets.all(context.gapMicro),
+              child: SvgPicture.asset(
+                AppAssets.icons.close,
+                width: 20,
+                height: 20,
+                fit: BoxFit.scaleDown,
+                colorFilter: ColorFilter.mode(
+                  context.ds.gloss,
+                  BlendMode.srcIn,
+                ),
+              ),
             ),
           ),
         ),
@@ -74,51 +85,53 @@ class FrequencySelectSheet extends StatelessWidget {
     );
   }
 
-  Widget buildManuelConfig(BuildContext context) {
+  /// The nudge controls are plates, not discs, and the value keeps tabular
+  /// figures so it does not shift width as it changes.
+  Widget buildManualConfig(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.center,
-      spacing: 18.w,
       children: [
-        IconCircleButton(
+        IconPlateButton(
           icon: AppAssets.icons.minus,
+          semanticLabel: "−1 Hz",
           onPressed: () => store.nudgeReferenceHz(-1),
         ),
-        Observer(
-          builder: (context) => Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: 2.h,
-            children: [
-              Text.rich(
-                TextSpan(
-                  children: [
+        Expanded(
+          child: Observer(
+            builder: (context) => Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.gapClose),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text.rich(
                     TextSpan(
-                      text: store.referenceHz.toStringAsFixed(0),
-                      style: context.readoutXl.copyWith(
-                        fontWeight: FontWeight.w500,
-                      ),
+                      children: [
+                        TextSpan(
+                          text: store.referenceHz.toStringAsFixed(0),
+                          style: context.measured(AppPass.two),
+                        ),
+                        TextSpan(
+                          text: " Hz",
+                          style: context
+                              .gloss(AppPass.three)
+                              .copyWith(color: context.ds.gloss),
+                        ),
+                      ],
                     ),
-                    TextSpan(
-                      text: "Hz",
-                      style: context.labelLarge!.copyWith(
-                        color: context.ds.textSecondary,
-                      ),
-                    ),
-                  ],
-                ),
+                  ),
+                  Text(
+                    context.l10n.defaultValue,
+                    style: context
+                        .gloss(AppPass.four)
+                        .copyWith(color: context.ds.gloss),
+                  ),
+                ],
               ),
-              Text(
-                context.l10n.defaultValue.toUpperCase(),
-                style: context.titleSmall!.copyWith(
-                  color: context.ds.inkSubtle,
-                ),
-              ),
-            ],
+            ),
           ),
         ),
-        IconCircleButton(
+        IconPlateButton(
           icon: AppAssets.icons.plus,
+          semanticLabel: "+1 Hz",
           onPressed: () => store.nudgeReferenceHz(1),
         ),
       ],
@@ -129,16 +142,14 @@ class FrequencySelectSheet extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
-      spacing: context.space2,
       children: [
         Text(
-          context.l10n.frequentlyUsed.toUpperCase(),
-          style: context.titleSmall!.copyWith(color: context.ds.inkSubtle),
+          context.l10n.frequentlyUsed,
+          style: context.gloss(AppPass.three).copyWith(color: context.ds.gloss),
         ),
+        SizedBox(height: context.gapTight),
         Observer(
           builder: (context) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            spacing: context.space2,
             children: ReferenceFrequency.presets
                 .map((preset) => Expanded(child: buildPreset(context, preset)))
                 .toList(),
@@ -151,23 +162,24 @@ class FrequencySelectSheet extends StatelessWidget {
   Widget buildPreset(BuildContext context, double preset) {
     final selected = preset == store.referenceHz;
 
-    return GestureDetector(
-      onTap: () => store.setReferenceHz(preset),
-      child: Container(
-        width: context.width,
-        padding: EdgeInsets.symmetric(vertical: context.space3),
-        decoration: BoxDecoration(
-          color: selected ? context.ds.actionBg : context.ds.bgSunken,
-          borderRadius: BorderRadius.circular(context.radiusPill),
-          border: Border.all(width: 1, color: context.ds.lineSeparator),
-        ),
-        child: Center(
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: InkWell(
+        onTap: () => store.setReferenceHz(preset),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 48),
+          color: selected ? context.ds.groundLift : Colors.transparent,
+          alignment: Alignment.center,
           child: Text(
             preset.toStringAsFixed(0),
-            style: context.numericS.copyWith(
-              color: selected ? context.ds.actionFg : context.ds.inkSubtle,
-              fontWeight: FontWeight.w600,
-            ),
+            style: selected
+                ? context
+                      .measured(AppPass.four)
+                      .copyWith(color: context.ds.passage)
+                : context
+                      .measuredGloss(AppPass.four)
+                      .copyWith(color: context.ds.gloss),
           ),
         ),
       ),

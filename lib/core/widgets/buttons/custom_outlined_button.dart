@@ -9,7 +9,6 @@ class CustomOutlinedButton extends StatelessWidget {
   final AppButtonSize size;
   final AppButtonTone tone;
   final bool expand;
-  final double? radius;
   final EdgeInsets? padding;
   final Color? color;
   final double? borderWidth;
@@ -23,7 +22,6 @@ class CustomOutlinedButton extends StatelessWidget {
     this.size = AppButtonSize.md,
     this.tone = AppButtonTone.normal,
     this.expand = false,
-    this.radius,
     this.padding,
     this.color,
     this.borderWidth,
@@ -35,30 +33,30 @@ class CustomOutlinedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final ds = context.ds;
 
-    final danger = tone == AppButtonTone.danger;
-    final signalOff = ds.signalOff;
+    final quiet = tone == AppButtonTone.quiet;
 
-    final strokeColor = color ?? (danger ? signalOff : ds.lineControl);
-    final labelColor = color ?? (danger ? signalOff : ds.textPrimary);
+    final strokeColor = color ?? ds.gloss;
+    final labelColor = color ?? (quiet ? ds.gloss : ds.passage);
 
     final button = OutlinedButton(
       onPressed: onPressed,
       style:
           OutlinedButton.styleFrom(
             foregroundColor: labelColor,
-            disabledForegroundColor: ds.textSecondary,
+            disabledForegroundColor: ds.gloss,
             overlayColor: splashColor,
             side: BorderSide(color: strokeColor, width: borderWidth ?? 1),
             minimumSize: Size(0, size.minHeight),
             padding: padding ?? size.padding,
             textStyle: size.textStyle,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius ?? 8),
+            // Radius 0: see design/CONSTITUTION.md §6.
+            shape: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.zero,
             ),
           ).copyWith(
             side: WidgetStateProperty.resolveWith((states) {
               final c = states.contains(WidgetState.disabled)
-                  ? ds.lineSeparator
+                  ? ds.groundLift
                   : strokeColor;
               return BorderSide(color: c, width: borderWidth ?? 1);
             }),

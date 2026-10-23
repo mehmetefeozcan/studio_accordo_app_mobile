@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>J</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=ranade@100,300,400,500,700&f[]=general-sans@300,400,500,600,700,400i&display=swap">
+<style>
+  :root{
+    --ground:#16222C;
+    --ivory:#F8F4EB;
+    --cyan:#7FB9C6;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--ground)}
+  body{
+    font-family:'General Sans',system-ui,sans-serif;
+    color:var(--ivory);
+    min-height:100vh;
+    padding:60px 30px 90px;
+  }
+  .split{
+    display:grid;
+    grid-template-columns:62fr 38fr;
+    column-gap:36px;
+    align-items:start;
+  }
+  .voice{
+    font-family:'Ranade',system-ui,sans-serif;
+    font-weight:300;
+    font-size:58px;
+    line-height:1.56;
+    letter-spacing:-.01em;
+  }
+  .voice .quiet{color:var(--cyan);font-weight:100}
+  .ledge{
+    font-size:16px;
+    font-weight:400;
+    line-height:2.3;
+    letter-spacing:.02em;
+    color:var(--cyan);
+    font-variant-numeric:tabular-nums;
+    padding-top:22px;
+  }
+  .ledge .strong{color:var(--ivory);font-weight:600}
+  .mark{
+    font-family:'Ranade',system-ui,sans-serif;
+    font-weight:500;
+    font-size:14px;
+    letter-spacing:.34em;
+    color:var(--cyan);
+    display:block;
+    margin-bottom:58px;
+  }
+  .lower{
+    margin-top:76px;
+    font-family:'Ranade',system-ui,sans-serif;
+    font-weight:400;
+    font-size:30px;
+    line-height:1.72;
+    letter-spacing:-.004em;
+    max-width:26ch;
+  }
+  .lower .quiet{color:var(--cyan);font-weight:100}
+  .tail{
+    margin-top:66px;
+    font-size:13px;
+    font-weight:500;
+    letter-spacing:.17em;
+    line-height:2.1;
+    color:var(--cyan);
+  }
+  .tail .it{font-style:italic;font-weight:400;color:var(--ivory)}
+</style>
+</head>
+<body>
+  <span class="mark">Studio Accordo</span>
+
+  <div class="split">
+    <div class="voice">
+      Günaydın<br>
+      <span class="quiet">İlerleme</span><br>
+      Kaldığın yer
+    </div>
+    <div class="ledge">
+      Bu Hafta<br>
+      <span class="strong">3 sa 40 dk</span><br>
+      hedef 5 sa<br>
+      Geçen haftaya göre <span class="strong">+35 dk</span><br>
+      <span class="strong">doğruluk %92</span>
+    </div>
+  </div>
+
+  <div class="lower">
+    Akortta<br><span class="quiet">Pes</span> &nbsp;<span class="quiet">Tiz</span> &nbsp;−4 sent
+  </div>
+
+  <div class="split" style="margin-top:62px">
+    <div class="lower" style="margin-top:0">
+      Teller<br>
+      <span class="quiet">E A D G B E</span>
+    </div>
+    <div class="ledge" style="padding-top:8px">
+      Referans frekansı<br>
+      <span class="strong">440 Hz</span><br>
+      Kromatik<br>
+      Ödevin<br>
+      <span class="strong">Ölçü 12–28</span><br>
+      hedef 96 BPM
+    </div>
+  </div>
+
+  <div class="tail">
+    Akort&nbsp;&nbsp;Metronom&nbsp;&nbsp;Nota tara&nbsp;&nbsp;Kütüphane<br>
+    <span class="it">Dün</span>&nbsp;&nbsp;Notalar çözümleniyor
+  </div>
+</body>
+</html>

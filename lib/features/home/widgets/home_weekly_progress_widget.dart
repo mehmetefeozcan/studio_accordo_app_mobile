@@ -3,109 +3,111 @@ import 'package:studio_accordo_app_mobile/features/home/model/weekly_progress.da
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/widgets/index.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
+/// Pass 2. No card: the week is grouped by its gaps and by sitting on the
+/// shared indent, not by a container. The meter is one of the two lines the
+/// direction permits, because the value is read positionally.
 class HomeWeeklyProgressWidget extends StatelessWidget {
   final WeeklyProgress progress;
 
-  const new({super.key, required this.progress});
+  const HomeWeeklyProgressWidget({super.key, required this.progress});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: context.width,
-      padding: context.cardPadding,
-      decoration: BoxDecoration(
-        color: context.ds.bgRaised,
-        borderRadius: BorderRadius.circular(context.radiusMd),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        spacing: context.space3,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            spacing: context.space1,
-            children: [
-              Point(size: 8.w, color: context.ds.actionBg),
-              Text(
-                context.l10n.thisWeek.toUpperCase(),
-                style: context.bodySmall!.copyWith(
-                  color: context.ds.inkSubtle,
-                  fontWeight: FontWeight.w600,
-                ),
-              ),
-            ],
-          ),
-          buildTimeRow(context),
-          LinearIndicator(progress: progress.progress),
-          buildWeeklyDiff(context),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          context.l10n.thisWeek,
+          style: context.gloss(AppPass.two).copyWith(color: context.ds.gloss),
+        ),
+        SizedBox(height: context.gapMicro),
+        buildTime(context),
+        SizedBox(height: context.gapClose),
+        SizedBox(
+          width: context.measureOf(AppPass.two),
+          child: LinearIndicator(progress: progress.progress),
+        ),
+        SizedBox(height: context.gapTight),
+        buildDiff(context),
+      ],
     );
   }
 
-  Widget buildTimeRow(BuildContext context) {
+  Widget buildTime(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
       children: [
         Text.rich(
           TextSpan(
             children: [
-              TextSpan(text: progress.hours.toString(), style: context.readout),
+              TextSpan(
+                text: progress.hours.toString(),
+                style: context.measured(AppPass.two),
+              ),
               TextSpan(
                 text: " ${context.l10n.h} ",
-                style: context.bodySmall!.copyWith(
-                  color: context.ds.textSecondary,
-                ),
+                style: context
+                    .gloss(AppPass.three)
+                    .copyWith(color: context.ds.gloss),
               ),
               TextSpan(
                 text: progress.remainingMinutes.toString(),
-                style: context.readout,
+                style: context.measured(AppPass.two),
               ),
               TextSpan(
                 text: " ${context.l10n.min}",
-                style: context.bodySmall!.copyWith(
-                  color: context.ds.textSecondary,
-                ),
+                style: context
+                    .gloss(AppPass.three)
+                    .copyWith(color: context.ds.gloss),
               ),
             ],
           ),
         ),
+        SizedBox(width: context.gapMicro),
         Text(
           context.l10n.goalPractiseHour(progress.goalHours),
-          style: context.numericS.copyWith(color: context.ds.inkSubtle),
+          style: context
+              .measuredGloss(AppPass.four)
+              .copyWith(color: context.ds.gloss),
         ),
       ],
     );
   }
 
-  Widget buildWeeklyDiff(BuildContext context) {
+  Widget buildDiff(BuildContext context) {
     final diff = progress.diffMinutes;
     final sign = diff >= 0 ? "+" : "−";
 
-    return Text.rich(
-      TextSpan(
-        children: [
-          TextSpan(
-            text: context.l10n.comparedToLastWeek,
-            style: context.bodySmall!.copyWith(color: context.ds.textSecondary),
-          ),
-          TextSpan(
-            text: " $sign${diff.abs()} ${context.l10n.min}",
-            style: context.bodySmall!.copyWith(
-              color: diff >= 0 ? context.ds.signalTrue : context.ds.signalOff,
-              fontWeight: FontWeight.w600,
+    return SizedBox(
+      width: context.measureOf(AppPass.three),
+      child: Text.rich(
+        TextSpan(
+          style: context
+              .measuredGloss(AppPass.four)
+              .copyWith(color: context.ds.gloss),
+          children: [
+            TextSpan(text: context.l10n.comparedToLastWeek),
+            // The direction has no success/failure colour. More or less
+            // practice is carried by weight and the sign, on one ink.
+            TextSpan(
+              text: " $sign${diff.abs()} ${context.l10n.min}",
+              style: context
+                  .measured(AppPass.four)
+                  .copyWith(
+                    color: context.ds.passage,
+                    fontSize: context.gloss(AppPass.four).fontSize,
+                  ),
             ),
-          ),
-
-          TextSpan(
-            text:
-                " · ${progress.metronomeHours} ${context.l10n.theClockWithMetronome}",
-            style: context.bodySmall!.copyWith(color: context.ds.textSecondary),
-          ),
-        ],
+            TextSpan(
+              text:
+                  " · ${progress.metronomeHours} "
+                  "${context.l10n.theClockWithMetronome}",
+            ),
+          ],
+        ),
       ),
     );
   }

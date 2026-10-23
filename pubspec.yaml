@@ -70,3 +70,25 @@ flutter:
     - family: Bravura
       fonts:
         - asset: assets/fonts/Bravura-subset.otf
+
+    # Kilitli yön G'nin yazı tipi. Indian Type Foundry, Fontshare üzerinden.
+    # Lisans: Fontshare lisansı — kişisel ve ticari kullanımda ücretsiz,
+    # uygulama içine gömmeye izinli. Dosyalar henüz indirilmedi; bu girdi
+    # etkin olana kadar tipografi platform serif'ine düşer.
+    # Ayrıntı: design/CONSTITUTION.md §4
+    # - family: Erode
+    #   fonts:
+    #     - asset: assets/fonts/Erode-Regular.ttf
+    #       weight: 400
+    #     - asset: assets/fonts/Erode-Italic.ttf
+    #       weight: 400
+    #       style: italic
+    #     - asset: assets/fonts/Erode-Medium.ttf
+    #       weight: 500
+    #     - asset: assets/fonts/Erode-MediumItalic.ttf
+    #       weight: 500
+    #       style: italic
+    #     - asset: assets/fonts/Erode-Semibold.ttf
+    #       weight: 600
+    #     - asset: assets/fonts/Erode-Bold.ttf
+    #       weight: 700

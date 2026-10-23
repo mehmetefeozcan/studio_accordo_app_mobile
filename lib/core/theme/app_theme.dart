@@ -1,33 +1,40 @@
 import 'package:studio_accordo_app_mobile/core/theme/app_semantic_colors.dart';
 import 'package:studio_accordo_app_mobile/core/theme/app_theme_colors.dart';
 import 'package:injectable/injectable.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/material.dart';
 
 import 'app_colors.dart';
 import 'text_theme.dart';
 
+/// Radius is 0 and nothing is raised. Grouping is the pass level and the
+/// gap scale, never a container. See design/CONSTITUTION.md §6.
 @singleton
 class AppTheme {
   ThemeData get darkTheme => _build(
     scheme: AppThemeColors.dark,
     semantic: AppSemanticColors.dark,
-    scaffold: AppColors.darkSurface100,
+    ground: AppColors.darkGround,
   );
 
   ThemeData get lightTheme => _build(
     scheme: AppThemeColors.light,
     semantic: AppSemanticColors.light,
-    scaffold: AppColors.lightSurface100,
+    ground: AppColors.lightGround,
+  );
+
+  static const _square = RoundedRectangleBorder(
+    borderRadius: BorderRadius.zero,
   );
 
   ThemeData _build({
     required ColorScheme scheme,
     required AppSemanticColors semantic,
-    required Color scaffold,
+    required Color ground,
   }) {
     final text = AppTextTheme.theme().apply(
-      bodyColor: scheme.onSurface,
-      displayColor: scheme.onSurface,
+      bodyColor: semantic.passage,
+      displayColor: semantic.passage,
     );
 
     return ThemeData(
@@ -36,152 +43,138 @@ class AppTheme {
       colorScheme: scheme,
       textTheme: text,
 
-      scaffoldBackgroundColor: scaffold,
-      canvasColor: scaffold,
+      scaffoldBackgroundColor: ground,
+      canvasColor: ground,
 
       extensions: <ThemeExtension<dynamic>>[semantic],
 
       appBarTheme: AppBarTheme(
+        // The bar is transparent, so the status bar has to be told which
+        // ground it is sitting on or it renders white on the light theme.
+        systemOverlayStyle: scheme.brightness == Brightness.dark
+            ? SystemUiOverlayStyle.light.copyWith(
+                statusBarColor: Colors.transparent,
+              )
+            : SystemUiOverlayStyle.dark.copyWith(
+                statusBarColor: Colors.transparent,
+              ),
         scrolledUnderElevation: 0,
         surfaceTintColor: Colors.transparent,
         backgroundColor: Colors.transparent,
-        foregroundColor: scheme.onSurface,
+        foregroundColor: semantic.passage,
         elevation: 0,
         centerTitle: false,
-        titleTextStyle: AppTextStyles.title2.copyWith(color: scheme.onSurface),
+        titleTextStyle: AppTextStyles.pass(AppPass.three)
+            .copyWith(color: semantic.passage),
       ),
 
-      cardTheme: CardThemeData(
-        color: scheme.surface,
+      // Cards are not part of this direction. The theme is set so that a
+      // stray Card renders flat on the ground rather than as a surface.
+      cardTheme: const CardThemeData(
+        color: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         elevation: 0,
         margin: EdgeInsets.zero,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(12)),
-        ),
+        shape: _square,
       ),
 
       dividerTheme: DividerThemeData(
-        color: scheme.outlineVariant,
+        color: semantic.gloss,
         thickness: 1,
         space: 1,
       ),
 
       filledButtonTheme: FilledButtonThemeData(
         style: FilledButton.styleFrom(
-          backgroundColor: scheme.primary,
-          foregroundColor: scheme.onPrimary,
-          disabledBackgroundColor: scheme.surfaceContainerHigh,
-          disabledForegroundColor: scheme.onSurfaceVariant,
-          minimumSize: const Size(0, 44),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          textStyle: AppTextStyles.bodyStrong,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
+          backgroundColor: semantic.passage,
+          foregroundColor: ground,
+          disabledBackgroundColor: semantic.groundLift,
+          disabledForegroundColor: semantic.gloss,
+          minimumSize: const Size(0, 48),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          textStyle: AppTextStyles.pass(AppPass.four),
+          elevation: 0,
+          shadowColor: Colors.transparent,
+          shape: _square,
         ),
       ),
 
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: OutlinedButton.styleFrom(
-          foregroundColor: scheme.onSurface,
-          side: BorderSide(color: scheme.outline),
-          minimumSize: const Size(0, 44),
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          textStyle: AppTextStyles.body,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
+          foregroundColor: semantic.passage,
+          side: BorderSide(color: semantic.gloss),
+          minimumSize: const Size(0, 48),
+          padding: const EdgeInsets.symmetric(horizontal: 18),
+          textStyle: AppTextStyles.pass(AppPass.four),
+          shape: _square,
         ),
       ),
 
       textButtonTheme: TextButtonThemeData(
         style: TextButton.styleFrom(
-          foregroundColor: semantic.accentText,
+          foregroundColor: semantic.passage,
           minimumSize: const Size(0, 44),
-          textStyle: AppTextStyles.body,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(12)),
-          ),
+          textStyle: AppTextStyles.gloss(AppPass.three),
+          shape: _square,
         ),
       ),
 
       inputDecorationTheme: InputDecorationTheme(
-        filled: true,
-        fillColor: scheme.surfaceContainerHigh,
-        hintStyle: AppTextStyles.body.copyWith(color: scheme.onSurfaceVariant),
-        contentPadding: const EdgeInsets.symmetric(
-          horizontal: 16,
-          vertical: 12,
+        filled: false,
+        hintStyle: AppTextStyles.gloss(AppPass.three)
+            .copyWith(color: semantic.gloss),
+        contentPadding: const EdgeInsets.symmetric(vertical: 12),
+        border: UnderlineInputBorder(
+          borderSide: BorderSide(color: semantic.gloss),
         ),
-        border: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: scheme.outline),
+        enabledBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: semantic.gloss),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: scheme.outline),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: semantic.focusRing, width: 2),
-        ),
-        errorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: scheme.error),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(12)),
-          borderSide: BorderSide(color: scheme.error, width: 2),
+        focusedBorder: UnderlineInputBorder(
+          borderSide: BorderSide(color: semantic.passage, width: 2),
         ),
       ),
 
       bottomSheetTheme: BottomSheetThemeData(
-        backgroundColor: semantic.sheet,
+        backgroundColor: semantic.groundSunken,
         surfaceTintColor: Colors.transparent,
-        modalBarrierColor: scheme.scrim,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-        ),
-      ),
-
-      navigationBarTheme: NavigationBarThemeData(
-        backgroundColor: scheme.surface,
-        surfaceTintColor: Colors.transparent,
-        indicatorColor: Colors.transparent,
+        modalBarrierColor: semantic.scrim,
         elevation: 0,
-        labelTextStyle: WidgetStatePropertyAll(AppTextStyles.label),
+        shape: _square,
       ),
 
       sliderTheme: SliderThemeData(
-        activeTrackColor: scheme.primary,
-        inactiveTrackColor: scheme.surfaceContainerHigh,
-        thumbColor: scheme.primary,
-        overlayColor: semantic.pressedOverlay,
+        activeTrackColor: semantic.passage,
+        inactiveTrackColor: semantic.groundLift,
+        thumbColor: semantic.passage,
+        overlayColor: semantic.groundLift,
+        trackHeight: 2,
       ),
 
       progressIndicatorTheme: ProgressIndicatorThemeData(
-        color: scheme.primary,
-        linearTrackColor: scheme.surfaceContainerHigh,
+        color: semantic.passage,
+        linearTrackColor: semantic.groundLift,
+        linearMinHeight: 2,
       ),
 
       switchTheme: SwitchThemeData(
         thumbColor: WidgetStateProperty.resolveWith(
-          (states) => states.contains(WidgetState.selected)
-              ? scheme.onPrimary
-              : semantic.controlThumb,
+          (states) =>
+              states.contains(WidgetState.selected) ? ground : semantic.gloss,
         ),
         trackColor: WidgetStateProperty.resolveWith(
           (states) => states.contains(WidgetState.selected)
-              ? scheme.primary
-              : scheme.surfaceContainerHigh,
+              ? semantic.passage
+              : semantic.groundLift,
         ),
         trackOutlineColor: const WidgetStatePropertyAll(Colors.transparent),
       ),
 
-      highlightColor: semantic.pressedOverlay,
+      highlightColor: semantic.groundLift,
+      splashColor: semantic.groundLift,
 
-      splashFactory: InkSparkle.splashFactory,
+      // No ink ripple: the direction has no expanding circles.
+      splashFactory: NoSplash.splashFactory,
     );
   }
 }

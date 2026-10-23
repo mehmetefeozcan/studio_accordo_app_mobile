@@ -8,6 +8,9 @@ import 'package:studio_accordo_app_mobile/core/di/locator.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
+/// The screen opens at pass 1 and contracts downward: greeting, then the week,
+/// then the shortcuts, then the homework and the last session at the tightest
+/// pass. Scrolling should feel like accelerating.
 class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
@@ -34,30 +37,46 @@ class _HomeViewState extends State<HomeView> with BaseViewMixin<HomeView> {
 
     return Scaffold(
       body: SafeArea(
+        bottom: false,
         child: SingleChildScrollView(
-          padding: context.screenPadding,
-          physics: BouncingScrollPhysics(),
+          padding: context.screenPadding.copyWith(
+            top: context.frameTop,
+            bottom: context.frameBottom,
+          ),
+          physics: const BouncingScrollPhysics(),
           child: Column(
-            spacing: context.space5,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               HomeAppbarWidget(greeting: store.greeting),
+              SizedBox(height: context.gapAfter(AppPass.one)),
               Observer(
                 builder: (context) {
                   final progress = store.weeklyProgress;
 
                   if (progress == null) return const SizedBox.shrink();
 
-                  return HomeWeeklyProgressWidget(progress: progress);
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: context.gapAfter(AppPass.two),
+                    ),
+                    child: HomeWeeklyProgressWidget(progress: progress),
+                  );
                 },
               ),
               const HomeShortcutsWidget(),
+              SizedBox(height: context.gapAfter(AppPass.two)),
               Observer(
                 builder: (context) {
                   final homework = store.currentHomework;
 
                   if (homework == null) return const SizedBox.shrink();
 
-                  return HomeHomeworkWidget(item: homework);
+                  return Padding(
+                    padding: EdgeInsets.only(
+                      bottom: context.gapAfter(AppPass.three),
+                    ),
+                    child: HomeHomeworkWidget(item: homework),
+                  );
                 },
               ),
               Observer(

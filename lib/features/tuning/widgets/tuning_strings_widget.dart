@@ -5,28 +5,29 @@ import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
+/// Six strings at pass 4. No boxes: selection is a fill on the lifted ground,
+/// and a string already tuned shifts to the gloss ink at italic — a
+/// non-colour cue as well as a colour one.
 class TuningStringsWidget extends StatelessWidget {
   final TuningStore store;
 
-  const new({super.key, required this.store});
+  const TuningStringsWidget({super.key, required this.store});
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      spacing: context.space2,
       children: [
         Text(
-          context.l10n.strings.toUpperCase(),
-          style: context.titleSmall!.copyWith(color: context.ds.inkSubtle),
+          context.l10n.strings,
+          style: context.gloss(AppPass.three).copyWith(color: context.ds.gloss),
         ),
+        SizedBox(height: context.gapTight),
         Observer(
           builder: (context) {
             final strings = store.strings;
 
             return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              spacing: context.space2,
               children: List.generate(
                 strings.length,
                 (index) => Expanded(
@@ -42,46 +43,22 @@ class TuningStringsWidget extends StatelessWidget {
 
   Widget buildString(BuildContext context, String note, int index) {
     final selected = index == store.selectedStringIndex;
-    final inTune = store.tunedStrings.contains(index);
-    final green = context.ds.signalTrue;
+    final tuned = store.tunedStrings.contains(index);
 
-    final onGreen = context.ds.onSignalTrue;
+    final style = tuned
+        ? context.gloss(AppPass.four).copyWith(color: context.ds.gloss)
+        : context.pass(AppPass.four).copyWith(color: context.ds.passage);
 
-    return GestureDetector(
-      onTap: () => store.selectString(index),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150),
-        padding: EdgeInsets.symmetric(
-          vertical: context.space3,
-          horizontal: context.space2,
-        ),
-        decoration: BoxDecoration(
-          color: inTune
-              ? green
-              : selected
-              ? context.ds.actionBg
-              : context.ds.bgRaised,
-          borderRadius: BorderRadius.circular(context.radiusSm),
-          border: Border.all(
-            width: selected ? 2 : 1,
-            color: selected
-                ? context.ds.actionBg
-                : inTune
-                ? green
-                : context.ds.lineSeparator,
-          ),
-        ),
-        child: Center(
-          child: Text(
-            note,
-            style: context.bodyMedium!.copyWith(
-              color: inTune
-                  ? onGreen
-                  : selected
-                  ? context.ds.actionFg
-                  : context.ds.textPrimary,
-            ),
-          ),
+    return Semantics(
+      button: true,
+      selected: selected,
+      child: InkWell(
+        onTap: () => store.selectString(index),
+        child: Container(
+          constraints: const BoxConstraints(minHeight: 48),
+          color: selected ? context.ds.groundLift : Colors.transparent,
+          alignment: Alignment.center,
+          child: Text(note, style: style),
         ),
       ),
     );

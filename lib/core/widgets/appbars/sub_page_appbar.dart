@@ -2,49 +2,56 @@ import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
+/// The title opens at pass 2 and is aligned to the shared left indent, so a
+/// sub page starts on the same axis as everything under it.
 class SubPageAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final String? backRoute;
   final List<Widget>? actions;
-  final bool centerTitle;
 
   const SubPageAppbar({
     super.key,
     required this.title,
     this.backRoute,
     this.actions,
-    this.centerTitle = true,
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      centerTitle: centerTitle,
+      centerTitle: false,
+      titleSpacing: 0,
       backgroundColor: Colors.transparent,
       scrolledUnderElevation: 0,
       surfaceTintColor: Colors.transparent,
+      leadingWidth: context.indent + 36,
       title: Text(
         title,
-        style: context.displayMedium!.copyWith(color: context.ds.textPrimary),
+        style: context.pass(AppPass.two).copyWith(color: context.ds.passage),
       ),
       actions: actions,
-      leading: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => context.backOrGo(backRoute, replace: true),
-        child: Transform.flip(
-          flipX: true,
-          child: SvgPicture.asset(
-            AppAssets.icons.chevron,
-            width: 44.w,
-            height: 44.h,
-            fit: BoxFit.scaleDown,
-            colorFilter: ColorFilter.mode(
-              context.ds.textPrimary,
-              BlendMode.srcIn,
+      leading: Semantics(
+        button: true,
+        label: MaterialLocalizations.of(context).backButtonTooltip,
+        child: InkWell(
+          onTap: () => context.backOrGo(backRoute, replace: true),
+          child: Padding(
+            padding: EdgeInsets.only(left: context.indent),
+            child: Transform.flip(
+              flipX: true,
+              child: SvgPicture.asset(
+                AppAssets.icons.chevron,
+                width: 24,
+                height: 24,
+                fit: BoxFit.scaleDown,
+                colorFilter: ColorFilter.mode(
+                  context.ds.passage,
+                  BlendMode.srcIn,
+                ),
+              ),
             ),
           ),
         ),

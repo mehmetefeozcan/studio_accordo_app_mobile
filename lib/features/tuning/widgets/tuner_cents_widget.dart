@@ -1,17 +1,23 @@
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/features/tuning/store/tuning_store.dart';
 import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
-import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 
+/// Tuning state without a new hue.
+///
+/// In tune reads tight: the passage ink, pass 2 weight, negative tracking.
+/// Out of tune reads loose: the gloss ink, lighter weight, open tracking.
+/// The word (Akortta / Pes / Tiz) and the sign carry the same information, so
+/// state is never colour alone.
+///
+/// This is open decision 1 in design/CONSTITUTION.md §13: faithful to the
+/// direction, not yet tested with a child at arm's length.
 class TunerCentsWidget extends StatelessWidget {
   final TuningStore store;
 
-  const new({super.key, required this.store});
+  const TunerCentsWidget({super.key, required this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -20,40 +26,45 @@ class TunerCentsWidget extends StatelessWidget {
         final cents = store.reading?.cents;
         final inTune = store.isInTune;
 
-        final color = inTune ? context.ds.signalTrue : context.ds.signalOff;
+        final ink = inTune ? context.ds.passage : context.ds.gloss;
 
-        return Row(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          mainAxisSize: MainAxisSize.min,
-          spacing: context.space2,
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                if (cents != null && !inTune)
-                  SvgPicture.asset(
-                    cents < 0 ? AppAssets.icons.minus : AppAssets.icons.plus,
-                    width: 32.w,
-                    height: 32.w,
-                    colorFilter: ColorFilter.mode(color, BlendMode.srcIn),
-                  ),
-                Text(
-                  cents == null ? "—" : cents.abs().round().toString(),
-                  style: context.readoutXl.copyWith(
-                    fontSize: 42.sp,
-                    color: color,
-                  ),
-                ),
-              ],
-            ),
-            Text(
-              label(context, cents, inTune).toUpperCase(),
-              style: context.titleSmall!.copyWith(color: color),
-            ),
-          ],
+        final value = inTune
+            ? context.measured(AppPass.two).copyWith(color: ink)
+            : context
+                  .measured(AppPass.two)
+                  .copyWith(
+                    color: ink,
+                    fontWeight: FontWeight.w400,
+                    letterSpacing: 0.04 * AppPass.two.size,
+                  );
+
+        return Semantics(
+          liveRegion: true,
+          label: label(context, cents, inTune),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(cents == null ? "—" : signedCents(cents), style: value),
+              SizedBox(height: context.gapMicro),
+              Text(
+                label(context, cents, inTune),
+                style: inTune
+                    ? context.pass(AppPass.four).copyWith(color: ink)
+                    : context.gloss(AppPass.three).copyWith(color: ink),
+              ),
+            ],
+          ),
         );
       },
     );
+  }
+
+  String signedCents(double cents) {
+    final rounded = cents.round();
+
+    if (rounded == 0) return "0";
+
+    return rounded > 0 ? "+$rounded" : "−${rounded.abs()}";
   }
 
   String label(BuildContext context, double? cents, bool inTune) {

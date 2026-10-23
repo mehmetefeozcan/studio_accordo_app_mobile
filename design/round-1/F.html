@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>F</title>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@100,200,300,400,500,700,800,900&display=swap">
+<style>
+  :root{
+    --ground:#F5F5F3;
+    --ink:#0E0E0E;
+    --grey:#58585A;
+    --blue:#1F3FC4;
+    --red:#C2141A;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{background:var(--ground)}
+  body{
+    font-family:'Cabinet Grotesk',system-ui,sans-serif;
+    color:var(--ink);
+    min-height:100vh;
+    padding:34px 26px 60px;
+    font-size:17px;
+    font-variant-numeric:tabular-nums;
+  }
+  .ledger{
+    display:grid;
+    grid-template-columns:3.4em 8.2em 1fr max-content;
+    column-gap:18px;
+    row-gap:0;
+    align-items:baseline;
+  }
+  .ledger > span{
+    padding:11px 0;
+    line-height:1.25;
+  }
+  .key{font-weight:800;letter-spacing:.02em}
+  .name{font-weight:400;color:var(--grey);letter-spacing:.01em}
+  .val{font-weight:500;color:var(--blue);letter-spacing:.005em}
+  .state{font-weight:700;color:var(--red);letter-spacing:.07em;text-transform:uppercase;font-size:14px;text-align:right}
+  .hdr{
+    display:grid;
+    grid-template-columns:3.4em 8.2em 1fr max-content;
+    column-gap:18px;
+    margin-bottom:26px;
+  }
+  .hdr span{
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:.26em;
+    text-transform:uppercase;
+    color:var(--grey);
+  }
+  .hdr .last{text-align:right}
+  .mark{
+    font-weight:900;
+    font-size:15px;
+    letter-spacing:.3em;
+    text-transform:uppercase;
+    margin-bottom:46px;
+    display:block;
+  }
+  .band{margin-top:40px}
+  .band .key{color:var(--blue)}
+  .close{
+    margin-top:52px;
+    display:grid;
+    grid-template-columns:3.4em 8.2em 1fr max-content;
+    column-gap:18px;
+    row-gap:9px;
+  }
+  .close span{font-size:13px;font-weight:400;color:var(--grey);letter-spacing:.04em}
+  .close .em{font-weight:700;color:var(--ink);letter-spacing:.02em}
+</style>
+</head>
+<body>
+  <span class="mark">Studio Accordo</span>
+
+  <div class="hdr">
+    <span>sa dk Hz</span><span>Teller</span><span>Referans frekansı</span><span class="last">Akortta</span>
+  </div>
+
+  <div class="ledger">
+    <span class="key">E</span><span class="name">Kromatik</span><span class="val">440 Hz</span><span class="state">Akortta</span>
+    <span class="key">A</span><span class="name">Kromatik</span><span class="val">440 Hz</span><span class="state">Pes</span>
+    <span class="key">D</span><span class="name">Kromatik</span><span class="val">440 Hz</span><span class="state">Tiz</span>
+    <span class="key">G</span><span class="name">Kromatik</span><span class="val">−4 sent</span><span class="state">Akortta</span>
+    <span class="key">B</span><span class="name">Kromatik</span><span class="val">440 Hz</span><span class="state">Pes</span>
+    <span class="key">E</span><span class="name">Kromatik</span><span class="val">440 Hz</span><span class="state">Akortta</span>
+  </div>
+
+  <div class="ledger band">
+    <span class="key">sa</span><span class="name">Bu Hafta</span><span class="val">3 sa 40 dk</span><span class="state">hedef 5 sa</span>
+    <span class="key">%</span><span class="name">İlerleme</span><span class="val">Geçen haftaya göre +35 dk</span><span class="state">doğruluk %92</span>
+    <span class="key">BPM</span><span class="name">Ödevin</span><span class="val">Ölçü 12–28</span><span class="state">hedef 96 BPM</span>
+    <span class="key">Dün</span><span class="name">Kaldığın yer</span><span class="val">Dün</span><span class="state">Metronom</span>
+  </div>
+
+  <div class="close">
+    <span class="em">Hz</span><span>Günaydın</span><span>Notalar çözümleniyor</span><span>Nota tara</span>
+    <span class="em">dk</span><span>Kütüphane</span><span>Akort</span><span>Metronom</span>
+    <span class="em">E</span><span>Teller</span><span>E A D G B E</span><span>Kromatik</span>
+  </div>
+</body>
+</html>

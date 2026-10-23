@@ -1,14 +1,14 @@
-import 'package:go_router/go_router.dart';
-import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
-import 'package:studio_accordo_app_mobile/core/routing/routes/main/main_routes.dart';
-import 'package:studio_accordo_app_mobile/core/widgets/buttons/custom_elevated_button.dart';
-import 'package:studio_accordo_app_mobile/core/widgets/buttons/custom_outlined_button.dart';
+import 'package:studio_accordo_app_mobile/core/widgets/buttons/index.dart';
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
-import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
+import 'package:studio_accordo_app_mobile/core/routing/routes/main/main_routes.dart';
+import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:flutter/material.dart';
 
+/// Pass 1 heading, pass-2 gloss explanation, actions at the bottom. The
+/// framed rest glyph is gone — the direction expresses absence as space, not
+/// as an illustration in a rounded plate.
 class NotFoundView extends StatelessWidget {
   const NotFoundView({super.key});
 
@@ -16,50 +16,39 @@ class NotFoundView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        minimum: context.screenPadding,
-        child: Center(
+        child: Padding(
+          padding: context.screenPadding.copyWith(
+            top: context.frameTop,
+            bottom: context.frameBottom,
+          ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Spacer(),
-              Container(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.space4,
-                  vertical: context.space2,
+              const Spacer(),
+              SizedBox(
+                width: context.measureOf(AppPass.one),
+                child: Text(
+                  context.l10n.noNotes,
+                  style: context.pass(AppPass.one),
                 ),
-                decoration: BoxDecoration(
-                  color: context.ds.paper,
-                  borderRadius: BorderRadius.circular(context.radiusLg),
-                ),
-                child: SvgPicture.asset(AppAssets.icons.wholeRestMeasure),
               ),
-              SizedBox(height: context.space7),
-              Text(context.l10n.noNotes, style: context.displayLarge),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: context.space4),
+              SizedBox(height: context.gapAfter(AppPass.one)),
+              SizedBox(
+                width: context.measureOf(AppPass.two),
                 child: Text(
                   context.l10n.pageNotFound,
-                  style: context.bodyMedium!.copyWith(
-                    color: context.ds.textSecondary,
-                  ),
-                  textAlign: TextAlign.center,
+                  style: context
+                      .gloss(AppPass.two)
+                      .copyWith(color: context.ds.gloss),
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               CustomElevatedButton(
-                onPressed: () {
-                  context.go(MainRoutes.home);
-                },
+                onPressed: () => context.go(MainRoutes.home),
                 expand: true,
-                child: Text(
-                  context.l10n.backToToday,
-                  style: context.bodyMedium!.copyWith(
-                    color: context.ds.actionFg,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                child: Text(context.l10n.backToToday),
               ),
-              SizedBox(height: context.space3),
+              SizedBox(height: context.gapTight),
               CustomOutlinedButton(
                 onPressed: () {
                   if (context.canPop()) {
@@ -69,13 +58,7 @@ class NotFoundView extends StatelessWidget {
                   }
                 },
                 expand: true,
-                child: Text(
-                  context.l10n.backToPrevious,
-                  style: context.bodyMedium!.copyWith(
-                    color: context.ds.textPrimary,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
+                child: Text(context.l10n.backToPrevious),
               ),
             ],
           ),

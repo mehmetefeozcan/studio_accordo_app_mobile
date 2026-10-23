@@ -6,23 +6,18 @@ import 'package:studio_accordo_app_mobile/core/widgets/index.dart';
 import 'package:flutter/material.dart';
 import 'package:moment_dart/moment_dart.dart';
 
+/// Pass 3 — the first place the direction's accent belongs, because homework
+/// carries a tempo target. The target is the only thing on this screen
+/// allowed to use `tempo`.
 class HomeHomeworkWidget extends StatelessWidget {
   final HomeworkItem item;
 
-  const new({super.key, required this.item});
+  const HomeHomeworkWidget({super.key, required this.item});
 
-  String details(BuildContext context) {
-    String text = "";
+  String barRange(BuildContext context) {
+    if (!item.hasBarRange) return "";
 
-    if (item.hasBarRange) {
-      text += "${context.l10n.bars} ${item.minBar}-${item.maxBar}";
-    }
-
-    if (item.bpm != null) {
-      text += " · ${context.l10n.targetBPM(item.bpm!)} ";
-    }
-
-    return text;
+    return "${context.l10n.bars} ${item.minBar}–${item.maxBar}";
   }
 
   String parseDeliveryDate() {
@@ -39,95 +34,101 @@ class HomeHomeworkWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      spacing: context.space2,
-      children: [buildTitle(context), buildHomeworkCard(context)],
-    );
-  }
-
-  Widget buildTitle(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(context.l10n.homework, style: context.titleLarge),
-        Text(
-          context.l10n.all,
-          style: context.bodySmall!.copyWith(color: context.ds.accentText),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                context.l10n.homework,
+                style: context
+                    .gloss(AppPass.two)
+                    .copyWith(color: context.ds.gloss),
+              ),
+            ),
+            Semantics(
+              button: true,
+              child: InkWell(
+                onTap: () {},
+                child: Padding(
+                  padding: EdgeInsets.all(context.gapMicro),
+                  child: Text(
+                    context.l10n.all,
+                    style: context.gloss(AppPass.four),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
+        SizedBox(height: context.gapMicro),
+        SizedBox(
+          width: context.measureOf(AppPass.three),
+          child: Text(item.pieceName, style: context.pass(AppPass.three)),
+        ),
+        SizedBox(height: context.gapMicro),
+        buildTarget(context),
+        SizedBox(height: context.gapClose),
+        SizedBox(
+          width: context.measureOf(AppPass.three),
+          child: LinearIndicator(progress: item.progress, isTempo: true),
+        ),
+        SizedBox(height: context.gapTight),
+        buildFoot(context),
       ],
     );
   }
 
-  Widget buildHomeworkCard(BuildContext context) {
-    return Container(
-      width: context.width,
-      padding: context.cardPadding,
-      decoration: BoxDecoration(
-        color: context.ds.bgRaised,
-        borderRadius: BorderRadius.circular(context.radiusMd),
-      ),
-      child: Column(
-        spacing: context.space3,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(item.pieceName, style: context.titleMedium),
-                  Text(
-                    details(context),
-                    style: context.numericS.copyWith(
-                      color: context.ds.inkSubtle,
-                    ),
-                  ),
-                ],
-              ),
-              buildStatusPill(context),
-            ],
+  /// `tempo` renders at pass 3 size here, which clears its contrast boundary.
+  Widget buildTarget(BuildContext context) {
+    final bpm = item.bpm;
+
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.baseline,
+      textBaseline: TextBaseline.alphabetic,
+      children: [
+        if (bpm != null)
+          Text(
+            context.l10n.targetBPM(bpm),
+            style: context
+                .measured(AppPass.three)
+                .copyWith(color: context.tempoFor(AppPass.three)),
           ),
-          LinearIndicator(progress: item.progress),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "${item.lastWorkingBpm ?? '-'} / ${item.bpm} BPM",
-                style: context.numericS.copyWith(
-                  color: context.ds.textSecondary,
-                ),
-              ),
-              Text(
-                "${context.l10n.delivery}: ${parseDeliveryDate()}",
-                style: context.bodySmall!.copyWith(
-                  color: context.ds.textSecondary,
-                ),
-              ),
-            ],
+        if (bpm != null && item.hasBarRange) SizedBox(width: context.gapMicro),
+        if (item.hasBarRange)
+          Text(
+            barRange(context),
+            style: context
+                .measuredGloss(AppPass.three)
+                .copyWith(color: context.ds.gloss),
           ),
-        ],
-      ),
+      ],
     );
   }
 
-  Widget buildStatusPill(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.symmetric(
-        vertical: context.space1,
-        horizontal: context.space2,
-      ),
-      decoration: BoxDecoration(
-        color: context.ds.accentWash,
-        borderRadius: BorderRadius.circular(context.radiusPill),
-        border: Border.all(width: 1, color: context.ds.accentDim),
-      ),
-      child: Text(
-        context.l10n.working,
-        style: context.titleSmall!.copyWith(
-          color: context.ds.accentText,
-          fontWeight: FontWeight.w600,
-        ),
+  Widget buildFoot(BuildContext context) {
+    return SizedBox(
+      width: context.measureOf(AppPass.two),
+      child: Row(
+        children: [
+          Text(
+            "${item.lastWorkingBpm ?? '—'} / ${item.bpm ?? '—'} BPM",
+            // Below pass 3, tempo steps down to its higher-contrast variant.
+            style: context
+                .measuredGloss(AppPass.four)
+                .copyWith(color: context.ds.tempoQuiet),
+          ),
+          SizedBox(width: context.gapMicro),
+          Expanded(
+            child: Text(
+              "${context.l10n.delivery}: ${parseDeliveryDate()}",
+              style: context
+                  .measuredGloss(AppPass.four)
+                  .copyWith(color: context.ds.gloss),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }

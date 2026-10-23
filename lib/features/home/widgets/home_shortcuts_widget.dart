@@ -7,7 +7,7 @@ import 'package:studio_accordo_app_mobile/core/assets/app_assets.dart';
 import 'package:flutter/material.dart';
 
 class HomeShortcutsWidget extends StatelessWidget {
-  const new({super.key});
+  const HomeShortcutsWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +29,14 @@ class HomeShortcutsWidget extends StatelessWidget {
       ),
     ];
 
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      spacing: context.space3,
+    // Each shortcut takes the width of its own label. Three equal columns
+    // would force a word like "Metronom" to break mid-word, and an equal
+    // grid is the tile row this direction is leaving behind.
+    return Wrap(
+      spacing: context.gapOpen,
+      runSpacing: context.gapClose,
       children: shortcuts
-          .map(
-            (params) =>
-                Expanded(child: HomeShortcutButtonWidget(params: params)),
-          )
+          .map((params) => HomeShortcutButtonWidget(params: params))
           .toList(),
     );
   }

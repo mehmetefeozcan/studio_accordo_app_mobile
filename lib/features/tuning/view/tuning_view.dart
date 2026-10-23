@@ -8,10 +8,12 @@ import 'package:studio_accordo_app_mobile/core/base/base_store.dart';
 import 'package:studio_accordo_app_mobile/core/base/base_view.dart';
 import 'package:studio_accordo_app_mobile/core/di/locator.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
+/// The dense counterpart to the home screen. There is no passage to repeat,
+/// so one sounding value opens the screen and everything below it contracts:
+/// reading, then deviation, then presets, then the six strings at pass 4.
 class TuningView extends StatefulWidget {
   const TuningView({super.key});
 
@@ -45,36 +47,39 @@ class _TuningViewState extends State<TuningView>
     return Scaffold(
       appBar: SubPageAppbar(
         title: context.l10n.tuning,
-        centerTitle: false,
         backRoute: MainRoutes.home,
         actions: [
           FrequencySelectWidget(store: store),
-          SizedBox(width: 16.w),
+          SizedBox(width: context.indent * 0.5),
         ],
       ),
       body: SafeArea(
-        minimum: context.screenPadding,
-        child: Column(
-          children: [
-            QuickTuningTypeSelectWidget(store: store),
-            SizedBox(height: context.space6),
-            TunerNoteInfoWidget(store: store),
-            SizedBox(height: context.space5),
-            Observer(
-              builder: (context) => TunerReadoutWidget(
-                cents: store.reading?.cents,
-                inTune: store.isInTune,
+        child: Padding(
+          padding: context.screenPadding.copyWith(bottom: context.gapLoose),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: context.gapOpen),
+              TunerNoteInfoWidget(store: store),
+              SizedBox(height: context.gapAfter(AppPass.one)),
+              Observer(
+                builder: (context) => TunerReadoutWidget(
+                  cents: store.reading?.cents,
+                  inTune: store.isInTune,
+                ),
               ),
-            ),
-            SizedBox(height: 20.w),
-            TunerCentsWidget(store: store),
-            Spacer(),
-            Observer(
-              builder: (context) => store.selectedTuning.isChromatic
-                  ? const SizedBox.shrink()
-                  : TuningStringsWidget(store: store),
-            ),
-          ],
+              SizedBox(height: context.gapAfter(AppPass.two)),
+              TunerCentsWidget(store: store),
+              const Spacer(),
+              QuickTuningTypeSelectWidget(store: store),
+              SizedBox(height: context.gapAfter(AppPass.three)),
+              Observer(
+                builder: (context) => store.selectedTuning.isChromatic
+                    ? const SizedBox.shrink()
+                    : TuningStringsWidget(store: store),
+              ),
+            ],
+          ),
         ),
       ),
     );

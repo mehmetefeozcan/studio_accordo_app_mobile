@@ -4,57 +4,61 @@ import 'package:studio_accordo_app_mobile/core/theme/text_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter/material.dart';
 
+export 'package:studio_accordo_app_mobile/core/theme/text_theme.dart'
+    show AppPass, AppPassMetrics;
+
+/// The direction expressed as the API screens actually call.
+///
+/// There is no radius getter, no card getter and no pill: radius is 0 and
+/// grouping is the pass level plus the gap scale.
+/// See design/CONSTITUTION.md.
 extension StudioAccordoTheme on BuildContext {
   AppSemanticColors get ds => Theme.of(this).extension<AppSemanticColors>()!;
 
-  TextStyle get readoutXl => AppTextStyles.readoutXl;
-  TextStyle get readout => AppTextStyles.readout;
-  TextStyle get numericS => AppTextStyles.numericS;
-  TextStyle get labelStyle => AppTextStyles.label;
-  TextStyle get bodyStrong => AppTextStyles.bodyStrong;
-  TextStyle get largeTitle => AppTextStyles.largeTitle;
-  TextStyle get displayNote => AppTextStyles.displayNote;
-  TextStyle get displayBpm => AppTextStyles.displayBpm;
-  TextStyle get pencilNote => AppTextStyles.pencilNote;
-  TextStyle get callout => AppTextStyles.callout;
-  double get space1 => 4.w;
-  double get space2 => 8.w;
-  double get space3 => 12.w;
-  double get space4 => 16.w;
-  double get space5 => 24.w;
-  double get space6 => 32.w;
-  double get space7 => 48.w;
-  double get space8 => 64.w;
+  // ---------------------------------------------------------------- passes
 
-  EdgeInsets get screenPadding => EdgeInsets.symmetric(horizontal: 16.w);
+  /// The repeated passage at a pass level.
+  TextStyle pass(AppPass p) => AppTextStyles.pass(p);
 
-  EdgeInsets get cardPadding => EdgeInsets.all(16.w);
+  /// The italic gloss belonging to a pass.
+  TextStyle gloss(AppPass p) => AppTextStyles.gloss(p);
 
-  double get radiusXs => 4.r;
-  double get radiusSm => 8.r;
-  double get radiusMd => 12.r;
-  double get radiusLg => 16.r;
-  double get radiusPill => 999.r;
+  /// A value that updates in place, with tabular figures.
+  TextStyle measured(AppPass p) => AppTextStyles.measured(p);
 
-  BorderRadius get borderRadiusXs => BorderRadius.circular(radiusXs);
-  BorderRadius get borderRadiusSm => BorderRadius.circular(radiusSm);
-  BorderRadius get borderRadiusMd => BorderRadius.circular(radiusMd);
-  BorderRadius get borderRadiusLg => BorderRadius.circular(radiusLg);
-  BorderRadius get borderRadiusPill => BorderRadius.circular(radiusPill);
+  TextStyle measuredGloss(AppPass p) => AppTextStyles.measuredGloss(p);
 
-  BoxDecoration get scoreSheet => BoxDecoration(
-    color: ds.sheet,
-    borderRadius: BorderRadius.circular(6.r),
-    border: Border.all(color: ds.lineSeparator),
-    boxShadow: ds.shadowRaised,
-  );
+  /// The single live value on a screen with no passage to repeat.
+  TextStyle get sounding => AppTextStyles.sounding;
 
-  BoxDecoration get paperSurface =>
-      BoxDecoration(color: ds.paper, borderRadius: borderRadiusLg);
+  /// Tempo values pick their colour from the size they render at, so the
+  /// accent never falls below its contrast boundary.
+  Color tempoFor(AppPass p) => ds.tempoAt(p.size);
 
-  BoxDecoration get cardSurface =>
-      BoxDecoration(color: ds.bgRaised, borderRadius: borderRadiusMd);
+  // ----------------------------------------------------------------- space
 
-  Color signalForCents(int cents, {int tolerance = 5}) =>
-      cents.abs() <= tolerance ? ds.signalTrue : ds.signalOff;
+  /// The shared left indent: 6% of screen width, proportional by design.
+  double get indent => 1.sw * 0.06;
+
+  /// Screen padding. The left indent is the locked trait; the right edge is
+  /// ragged, so it is held in at half the indent only to avoid clipping.
+  EdgeInsets get screenPadding =>
+      EdgeInsets.only(left: indent, right: indent * 0.5);
+
+  /// Vertical frame from the direction: 46 top, 96 bottom.
+  double get frameTop => 46.h;
+  double get frameBottom => 96.h;
+
+  /// The contracting gap scale: 62 / 38 / 24 / 15, plus 8 as the micro gap.
+  double get gapMicro => 8.h;
+  double get gapTight => 15.h;
+  double get gapClose => 24.h;
+  double get gapOpen => 38.h;
+  double get gapLoose => 62.h;
+
+  /// The gap that follows a given pass.
+  double gapAfter(AppPass p) => p.gapAfter.h;
+
+  /// The width a pass occupies, measured from the shared left indent.
+  double measureOf(AppPass p) => (1.sw - indent) * p.measure;
 }

@@ -1,3 +1,4 @@
+import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/core/constants/app_constants.dart';
 import 'package:flutter/material.dart';
 
@@ -15,25 +16,23 @@ Future<T?> showGlobalBottomSheet<T>(
 
   if (context == null) return null;
 
-  final theme = Theme.of(context);
-
   return showModalBottomSheet<T>(
     context: context,
     isScrollControlled: isScrollControlled,
-    backgroundColor: backgroundColor ?? theme.cardColor,
+    // The sheet is the one case where a second ground value is permitted.
+    backgroundColor: backgroundColor ?? context.ds.groundSunken,
     isDismissible: true,
-    shape: const RoundedRectangleBorder(
-      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-    ),
-    showDragHandle: true,
+    // Radius 0: see design/CONSTITUTION.md §6.
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+    showDragHandle: false,
     enableDrag: true,
     useSafeArea: true,
     builder: (context) {
       final keyboardPadding = MediaQuery.of(context).viewInsets.bottom;
-      final contentPadding =
-          (padding ?? EdgeInsets.only(left: 18.0, right: 18.0)).copyWith(
-            bottom: keyboardPadding > 0 ? keyboardPadding + 10 : 24.0,
-          );
+      final contentPadding = (padding ?? context.screenPadding).copyWith(
+        top: context.gapOpen,
+        bottom: keyboardPadding > 0 ? keyboardPadding + 10 : context.gapOpen,
+      );
 
       if (minChildSize == null && maxChildSize == null) {
         return Padding(padding: contentPadding, child: child);

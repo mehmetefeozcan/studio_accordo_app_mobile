@@ -1,15 +1,16 @@
 import 'package:studio_accordo_app_mobile/core/extension/theme_context_extension.dart';
 import 'package:studio_accordo_app_mobile/features/tuning/store/tuning_store.dart';
-import 'package:studio_accordo_app_mobile/core/extension/main_extension.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter/material.dart';
 
+/// The tuner has no passage to repeat, so it uses the one sounding value and
+/// contracts everything beneath it. Left-aligned on the shared indent like
+/// every other screen — the reading is not centred.
 class TunerNoteInfoWidget extends StatelessWidget {
   final TuningStore store;
 
-  const new({super.key, required this.store});
+  const TunerNoteInfoWidget({super.key, required this.store});
 
   @override
   Widget build(BuildContext context) {
@@ -18,36 +19,29 @@ class TunerNoteInfoWidget extends StatelessWidget {
         final reading = store.reading;
 
         return Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text.rich(
               TextSpan(
                 children: [
+                  TextSpan(text: reading?.note ?? '—', style: context.sounding),
                   TextSpan(
-                    text: reading?.note ?? '—',
-                    style: context.displayLarge!.copyWith(
-                      fontSize: 92.sp,
-                      fontWeight: FontWeight.w500,
-                    ),
-                  ),
-                  TextSpan(text: " "),
-                  TextSpan(
-                    text: reading?.octave.toString() ?? "",
-                    style: context.readout.copyWith(
-                      color: context.ds.textSecondary,
-                    ),
+                    text: reading == null ? "" : " ${reading.octave}",
+                    style: context
+                        .measured(AppPass.three)
+                        .copyWith(color: context.ds.gloss),
                   ),
                 ],
               ),
             ),
+            SizedBox(height: context.gapMicro),
             Text(
               reading == null
                   ? "— Hz"
                   : "${reading.frequency.toStringAsFixed(2)} Hz",
-              style: context.numericS.copyWith(
-                color: context.ds.textSecondary,
-                fontSize: 15.sp,
-              ),
+              style: context
+                  .measuredGloss(AppPass.three)
+                  .copyWith(color: context.ds.gloss),
             ),
           ],
         );

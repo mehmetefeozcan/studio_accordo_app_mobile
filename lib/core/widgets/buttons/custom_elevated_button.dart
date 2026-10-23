@@ -10,7 +10,6 @@ class CustomElevatedButton extends StatelessWidget {
   final bool expand;
   final bool isLoading;
   final String? loadingLabel;
-  final double? radius;
   final EdgeInsets? padding;
   final Color? color;
   final Color? foregroundColor;
@@ -26,7 +25,6 @@ class CustomElevatedButton extends StatelessWidget {
     this.expand = false,
     this.isLoading = false,
     this.loadingLabel,
-    this.radius,
     this.padding,
     this.color,
     this.foregroundColor,
@@ -39,7 +37,6 @@ class CustomElevatedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final ds = context.ds;
     final disabled = onPressed == null || isLoading;
-    final shape = BorderRadius.circular(radius ?? 8);
 
     final label = isLoading && loadingLabel != null
         ? Text(loadingLabel!)
@@ -48,17 +45,18 @@ class CustomElevatedButton extends StatelessWidget {
     final button = FilledButton(
       onPressed: disabled ? null : onPressed,
       style: FilledButton.styleFrom(
-        backgroundColor: color ?? ds.actionBg,
-        foregroundColor: foregroundColor ?? ds.actionFg,
-        disabledBackgroundColor: disabledColor ?? ds.bgSunken,
-        disabledForegroundColor: ds.textSecondary,
+        backgroundColor: color ?? ds.passage,
+        foregroundColor: foregroundColor ?? ds.ground,
+        disabledBackgroundColor: disabledColor ?? ds.groundLift,
+        disabledForegroundColor: ds.gloss,
         overlayColor: splashColor,
         minimumSize: Size(0, size.minHeight),
         padding: padding ?? size.padding,
         textStyle: size.textStyle,
         elevation: 0,
         shadowColor: Colors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: shape),
+        // Radius 0: see design/CONSTITUTION.md §6.
+        shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
       ),
       child: icon == null
           ? label
